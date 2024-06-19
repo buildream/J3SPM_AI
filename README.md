@@ -20,10 +20,10 @@ If you're new to Labelme, you can get started with [Labelme Starter Guide](https
 
 ## Installation
 
-- Platform specific installation: [Windows for CPU](#windows for CPU),  [Windows for GPU](#windows for GPU)
+- Platform specific installation: [Windows for CPU](#windows_CPU),  [Windows for GPU](#windows_GPU)
 - Make your own work holder and proceed with the installation there. (eg. C:/user/myworks )
 
-### Windows for CPU
+### Windows_CPU
 
 Install [Anaconda](https://www.continuum.io/downloads), then in an Anaconda Prompt run:
 
@@ -40,7 +40,7 @@ pip install labelme
 # https://github.com/wkentaro/labelme/releases
 ```
 
-### Windows for GPU
+### Windows_GPU
 
 Install [Anaconda](https://www.continuum.io/downloads), then in an Anaconda Prompt run:
 
