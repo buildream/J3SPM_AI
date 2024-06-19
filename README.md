@@ -21,11 +21,11 @@ If you're new to Labelme, you can get started with [Labelme Starter Guide](https
 ## Installation
 
 - Platform specific installation: [Windows for CPU](#windows_CPU),  [Windows for GPU](#windows_GPU)
-- Make J3SPM_AI holder in your PC and proceed with the installation there. (eg. C:/user/J3SPM_AI )
+- Make "J3SPM_AI" holder in your PC and proceed with the installation there. (eg. C:/user/J3SPM_AI )
 
 ### Windows_CPU
 
-Install [Anaconda](https://www.continuum.io/downloads), then in an Anaconda Prompt run:
+Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "J3SPM_AI" folder run:
 
 ```bash
 conda create -n J3SPM_AI_cpu python=3.9.19
@@ -52,15 +52,32 @@ git clone https://github.com/buildream/J3SPM_AI
 
 ### Windows_GPU
 
-Install [Anaconda](https://www.continuum.io/downloads), then in an Anaconda Prompt run:
+Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "J3SPM_AI" folder run:
 
 ```bash
-conda create --name=labelme python=3
-conda activate labelme
-pip install labelme
+conda create -n J3SPM_AI_gpu python=3.9.19
+conda activate J3SPM_AI_gpu
+# install drivers for gpu 
+conda install -c conda-forge cudatoolkit=11.8
+conda install -c conda-forge cudnn
+# intall pytorch for gpu, refer pytorch official website : https://pytorch.org/
+conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
 
-# or install standalone executable/app from:
-# https://github.com/wkentaro/labelme/releases
+#install git and clone yolov5
+conda install git
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -r requirements.txt
+
+# install AI tools
+conda install -c conda-forge pyqt=5
+pip install labelimg
+conda install -c conda-forge labelme
+conda install pyserial
+
+# install J3SPM_AI
+git clone https://github.com/buildream/J3SPM_AI
+
 ```
 
 ## Usage
