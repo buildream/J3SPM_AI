@@ -1,4 +1,4 @@
-# J3SPM_AI
+# J<sup>3</sup>SPM AI
 
 ## Features
 
