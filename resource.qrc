@@ -1,0 +1,7 @@
+<RCC>
+  <qresource prefix="newPrefix">
+    <file>j3spm.png</file>
+    <file>j3spm111.png</file>
+    <file>j3spm-AI36.png</file>
+  </qresource>
+</RCC>
