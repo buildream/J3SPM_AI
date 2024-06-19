@@ -21,7 +21,7 @@ If you're new to Labelme, you can get started with [Labelme Starter Guide](https
 ## Installation
 
 - Platform specific installation: [Windows for CPU](#windows_CPU),  [Windows for GPU](#windows_GPU)
-- Make your own work holder and proceed with the installation there. (eg. C:/user/myworks )
+- Make J3SPM_AI holder in your PC and proceed with the installation there. (eg. C:/user/J3SPM_AI )
 
 ### Windows_CPU
 
@@ -32,12 +32,22 @@ conda create -n J3SPM_AI_cpu python=3.9.19
 conda activate J3SPM_AI_cpu
 # install pytorch for cpu
 conda install pytorch torchvision torchaudio cpuonly -c pytorch
-conda install intall git
-git clone 
-pip install labelme
 
-# or install standalone executable/app from:
-# https://github.com/wkentaro/labelme/releases
+#install git and clone yolov5
+conda install git
+git clone https://github.com/ultralytics/yolov5.git
+cd yolov5
+pip install -r requirements.txt
+
+# install AI tools
+conda install -c conda-forge pyqt=5
+pip install labelimg
+conda install -c conda-forge labelme
+conda install pyserial
+
+# install J3SPM_AI
+git clone https://github.com/buildream/J3SPM_AI
+
 ```
 
 ### Windows_GPU
