@@ -82,7 +82,9 @@ conda install pyserial
 Run `python J3SPM_AI.py` in an Anaconda Prompt.
 (ex. (J3SPM_AI_CPU) C:\users\AI_project\J3SPM_AI\python J3SPM_AI.py)
 
-# YOLOv5 Segment model download 
+## YOLOv5 Segmentation model download 
+Object detection models of YOLOv5 are downloaded automatically to "yolov5/models" folder at the first inference.
+But segmentation models should be downloaded manually before using at [YOLOv5 segmentation] https://github.com/ultralytics/yolov5/discussions/10258)
 
 # Tutorial 
 cd examples/tutorial
