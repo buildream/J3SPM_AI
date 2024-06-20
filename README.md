@@ -52,7 +52,7 @@ conda install pyserial
 
 ### Windows_GPU
 
-Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "J3SPM_AI" folder run:
+Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "AI_project" folder run:
 
 ```bash
 conda create -n J3SPM_AI_gpu python=3.9.19
