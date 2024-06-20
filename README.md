@@ -12,7 +12,7 @@
 ## Installation
 
 - Platform specific installation: [Windows for CPU](#windows_CPU),  [Windows for GPU](#windows_GPU)
-- Make "AI_project" holder in your PC and proceed with the installation there. (ex. C:/user/AI_project )
+- Make "AI_project" folder in your PC and proceed with the installation there. (ex. C:/users/AI_project )
 - 
 
 ### Windows_CPU
@@ -79,7 +79,8 @@ conda install pyserial
 
 ## Usage
 
-Run `C:\users\AI_project\J3SPM_AI\python J3SPM_AI.py`.  
+Run `python J3SPM_AI.py` in an Anaconda Prompt.
+(ex. (J3SPM_AI_CPU) C:\users\AI_project\J3SPM_AI\python J3SPM_AI.py)
 
 # YOLOv5 Segment model download 
 
