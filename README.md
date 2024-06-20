@@ -20,8 +20,10 @@
 Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "AI_project" folder run:
 
 ```bash
+# create anaconda environment
 conda create -n J3SPM_AI_cpu python=3.9.19
 conda activate J3SPM_AI_cpu
+
 # install pytorch for cpu
 conda install pytorch torchvision torchaudio cpuonly -c pytorch
 
