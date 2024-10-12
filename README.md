@@ -29,7 +29,7 @@ conda install pytorch torchvision torchaudio cpuonly -c pytorch
 
 # install git and  J3SPM_AI
 conda install git
-git clone https://github.com/buildream/J3SPM_AI
+git clone https://github.com/buildream/J3SPM_AI.git
 
 # clone yolov5
 git clone https://github.com/ultralytics/yolov5.git
