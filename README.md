@@ -27,11 +27,11 @@ conda activate J3SPM_AI_cpu
 # install pytorch for cpu
 conda install pytorch torchvision torchaudio cpuonly -c pytorch
 
-# install J3SPM_AI
+# install git and  J3SPM_AI
+conda install git
 git clone https://github.com/buildream/J3SPM_AI
 
-#install git and clone yolov5
-conda install git
+# clone yolov5
 git clone https://github.com/ultralytics/yolov5.git
 cd yolov5
 pip install -r requirements.txt
