@@ -14,7 +14,6 @@ dependencies:
   - cudatoolkit=11.8
   - cudnn
   - git
-  - PySide2
   - labelme
   - pyserial
   - pip:
