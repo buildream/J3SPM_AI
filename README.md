@@ -11,84 +11,36 @@
 
 ## Installation
 
-- Platform specific installation: [Windows for CPU](#windows_CPU),  [Windows for GPU](#windows_GPU)
-- Make "AI_project" folder in your PC and proceed with the installation there. (ex. C:/users/AI_project )
-- 
+- Install [Anaconda](https://https://www.anaconda.com/download/success) first.
+- Install windows_cpu or windows_gpu.
 
 ### Windows_CPU
 
-Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "AI_project" folder run:
-
-```bash
-# create anaconda environment
-conda create -n J3SPM_AI_cpu python=3.9.19
-conda activate J3SPM_AI_cpu
-
-# install pytorch for cpu
-conda install pytorch torchvision torchaudio cpuonly -c pytorch
-
-# install git and  J3SPM_AI
-conda install git
-git clone https://github.com/buildream/J3SPM_AI.git
-
-# clone yolov5
-git clone https://github.com/ultralytics/yolov5.git
-cd yolov5
-pip install -r requirements.txt
-
-# install AI tools
-conda install -c conda-forge pyqt=5
-pip install labelimg
-conda install -c conda-forge labelme
-conda install pyserial
-
-```
+Copy "enviroment_cpu.yml" and "install_cpuyml.bat" files in "Installment" folder to your computer. (ex. C:\Users\build\cpu_install )
+Ensure "install_cpuyml.bat" is being run with administrative privileges. Right-click the batch file and select "Run as administrator".
 
 ### Windows_GPU
 
-Install [Anaconda](https://https://www.anaconda.com/download/success), then in an Anaconda Prompt and the "AI_project" folder run:
+Copy "enviroment_gpu.yml" and "install_gpuyml.bat" files in "Installment" folder to your computer. (ex. C:\Users\build\gpu_install )
+Ensure "install_gpuyml.bat" is being run with administrative privileges. Right-click the batch file and select "Run as administrator".
 
-```bash
-conda create -n J3SPM_AI_gpu python=3.9.19
-conda activate J3SPM_AI_gpu
-# install drivers for gpu 
-conda install -c conda-forge cudatoolkit=11.8
-conda install -c conda-forge cudnn
-# intall pytorch for gpu, refer pytorch official website : https://pytorch.org/
-conda install pytorch torchvision torchaudio pytorch-cuda=11.8 -c pytorch -c nvidia
-
-# install J3SPM_AI
-git clone https://github.com/buildream/J3SPM_AI
-
-#install git and clone yolov5
-conda install git
-git clone https://github.com/ultralytics/yolov5.git
-cd yolov5
-pip install -r requirements.txt
-
-# install AI tools
-conda install -c conda-forge pyqt=5
-pip install labelimg
-conda install -c conda-forge labelme
-conda install pyserial
-
-```
 ### Gwyddion installation
 
 [Gwyddion download](http://gwyddion.net/download.php)
 
 ## Usage
-
-Run `python J3SPM_AI.py` in an Anaconda Prompt.
-(ex. (J3SPM_AI_CPU) C:\users\AI_project\J3SPM_AI\python J3SPM_AI.py)
+1. Run Anaconda prompt or Anaconda powershell prompt.
+2. Activate J3SPM_AI_cpu or J3SPM_AI_gpu environment ( conda activate J3SPM_AI_cpu ).
+3. Change folder ( cd C:\Users\J3SPM_AI_cpu\yolov5 ).
+4. Run `python J3SPM_AI.py` in an Anaconda Prompt.
+  (ex. (J3SPM_AI_cpu) C:\users\J3SPM_AI_cpu\yolov5\python J3SPM_AI.py)
 
 ## YOLOv5 Segmentation model download 
 Object detection models of YOLOv5 are downloaded automatically to "yolov5/models" folder at the first inference.
-But segmentation models should be downloaded manually before using at [YOLOv5 segmentation] https://github.com/ultralytics/yolov5/discussions/10258)
+But segmentation models should be downloaded manually before using at [YOLOv5 segmentation] https://github.com/ultralytics/yolov5/discussions/10258).
 
 # Tutorial 
 cd examples/tutorial
-
 
 ## Examples
 
