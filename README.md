@@ -12,17 +12,17 @@
 ## Installation
 
 - Install [Anaconda](https://https://www.anaconda.com/download/success) first.
-- Install windows_cpu or windows_gpu.
+- Install windows_cpu or windows_gpu following steps.
 
 ### Windows_CPU
 
-Copy "enviroment_cpu.yml" and "install_cpuyml.bat" files in "Installment" folder to your computer. (ex. C:\Users\build\cpu_install )
-Ensure "install_cpuyml.bat" is being run with administrative privileges. Right-click the batch file and select "Run as administrator".
+Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installment` folder to your computer. (ex. C:\Users\build\cpu_install )
+Ensure `install_cpuyml.bat` is being run with administrative privileges. Right-click the batch file and select `Run as administrator`.
 
 ### Windows_GPU
 
-Copy "enviroment_gpu.yml" and "install_gpuyml.bat" files in "Installment" folder to your computer. (ex. C:\Users\build\gpu_install )
-Ensure "install_gpuyml.bat" is being run with administrative privileges. Right-click the batch file and select "Run as administrator".
+Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder to your computer. (ex. C:\Users\build\gpu_install )
+Ensure `install_gpuyml.bat` is being run with administrative privileges. Right-click the batch file and select `Run as administrator`.
 
 ### Gwyddion installation
 
