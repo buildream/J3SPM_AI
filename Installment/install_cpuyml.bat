@@ -47,7 +47,7 @@ git clone https://github.com/buildream/J3SPM_AI.git
 git clone https://github.com/buildream/yolov5_J3SPM.git
 
 :: Change directory to yolov5
-cd yolov5
+cd yolov5_J3SPM
 
 :: Install pip requirements
 pip install -r requirements.txt
@@ -59,7 +59,7 @@ move *.py "C:\Users\J3SPM_AI_cpu\yolov5_J3SPM"
 move resource.qrc "C:\Users\J3SPM_AI_cpu\yolov5_J3SPM"
 move testimg.jpg "C:\Users\J3SPM_AI_cpu\yolov5_J3SPM"
 
-cd ..\yolov5
+cd ..\yolov5_J3SPM
 git clone https://github.com/buildream/labelImg_J3SPM.git
 cd labelImg_J3SPM
 pyrcc5 -o libs/resources.py resources.qrc
