@@ -49,7 +49,7 @@ git clone https://github.com/buildream/J3SPM_AI.git
 git clone https://github.com/buildream/yolov5_J3SPM.git
 
 :: Change directory to yolov5
-cd yolov5
+cd yolov5_J3SPM
 
 :: Install pip requirements
 pip install -r requirements.txt
