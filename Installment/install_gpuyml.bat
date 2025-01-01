@@ -58,17 +58,17 @@ pip install -r requirements.txt
 cd ..\J3SPM_AI
 
 :: move files
-move *.py "C:\Users\J3SPM_AI_gpu\yolov5"
-move resource.qrc "C:\Users\J3SPM_AI_gpu\yolov5"
-move testimg.jpg "C:\Users\J3SPM_AI_gpu\yolov5"
+move *.py "C:\Users\J3SPM_AI_gpu\yolov5_J3SPM"
+move resource.qrc "C:\Users\J3SPM_AI_gpu\yolov5_J3SPM"
+move testimg.jpg "C:\Users\J3SPM_AI_gpu\yolov5_J3SPM"
 
-cd ..\yolov5
+cd ..\yolov5_J3SPM
 
 git clone https://github.com/buildream/labelImg_J3SPM.git
-cd labelImg
+cd labelImg_J3SPM
 pyrcc5 -o libs/resources.py resources.qrc
 
-cd ..\yolov5
+cd ..\yolov5_J3SPM
 
 echo Intallment completed!!  Type "python J3SPM_AI.py" to run program.
 echo If you meet PyQT related error, restart console.
