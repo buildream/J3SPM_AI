@@ -46,7 +46,7 @@ cd /d "C:\Users\J3SPM_AI_gpu"
 git clone https://github.com/buildream/J3SPM_AI.git 
 
 :: Clone the YOLOv5 repository
-git clone https://github.com/ultralytics/yolov5.git
+git clone https://github.com/buildream/yolov5_J3SPM.git
 
 :: Change directory to yolov5
 cd yolov5
@@ -61,6 +61,12 @@ cd ..\J3SPM_AI
 move *.py "C:\Users\J3SPM_AI_gpu\yolov5"
 move resource.qrc "C:\Users\J3SPM_AI_gpu\yolov5"
 move testimg.jpg "C:\Users\J3SPM_AI_gpu\yolov5"
+
+cd ..\yolov5
+
+git clone https://github.com/buildream/labelImg_J3SPM.git
+cd labelImg
+pyrcc5 -o libs/resources.py resources.qrc
 
 cd ..\yolov5
 
