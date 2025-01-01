@@ -16,5 +16,5 @@ dependencies:
   - git
   - labelme
   - pyserial
-  - pip:
-      - labelImg
+  - pyqt=5
+  - lxml
