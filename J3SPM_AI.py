@@ -240,7 +240,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
     
     def do_labelstudio(self):
         current_dir = os.path.dirname(os.path.abspath(__file__)) 
-        script_path = os.path.join(current_dir, 'labelimg', 'labelImg.py')
+        script_path = os.path.join(current_dir, 'labelimg_J3SPM', 'labelImg.py')
         python_executable = 'python'
         subprocess.run([python_executable, script_path], check=True)
 
