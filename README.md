@@ -17,12 +17,12 @@
 ### Windows_CPU
 
 Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installment` folder to your computer. (ex. C:\Users\build\cpu_install )
-Ensure `install_cpuyml.bat` is being run with administrative privileges. Right-click the batch file and select `Run as administrator`.
+
 
 ### Windows_GPU
 
 Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder to your computer. (ex. C:\Users\build\gpu_install )
-Ensure `install_gpuyml.bat` is being run with administrative privileges. Right-click the batch file and select `Run as administrator`.
+
 
 ### Gwyddion installation
 
@@ -31,12 +31,12 @@ Ensure `install_gpuyml.bat` is being run with administrative privileges. Right-c
 ## Usage
 1. Run Anaconda prompt or Anaconda powershell prompt.
 2. Activate J3SPM_AI_cpu or J3SPM_AI_gpu environment ( conda activate J3SPM_AI_cpu ).
-3. Change folder ( cd C:\Users\J3SPM_AI_cpu\yolov5 ).
+3. Change folder. ( cd C:\Users\username\J3SPM_AI_cpu\yolov5_J3SPM,   username=> windows login name)
 4. Run `python J3SPM_AI.py` in an Anaconda Prompt.
-  (ex. (J3SPM_AI_cpu) C:\users\J3SPM_AI_cpu\yolov5\python J3SPM_AI.py)
+  (ex. (J3SPM_AI_cpu) C:\users\username\J3SPM_AI_cpu\yolov5_J3SPM\python J3SPM_AI.py,   username=> windows login name)
 
 ## YOLOv5 Segmentation model download 
-Object detection models of YOLOv5 are downloaded automatically to "yolov5/models" folder at the first inference.
+Object detection models of YOLOv5 are downloaded automatically to "yolov5_J3SPM/models" folder at the first inference.
 But segmentation models should be downloaded manually before using at [YOLOv5 segmentation] https://github.com/ultralytics/yolov5/discussions/10258).
 
 # Tutorial 
