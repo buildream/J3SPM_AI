@@ -8,8 +8,8 @@ cd /d %script_path%
 call "%UserProfile%\anaconda3\Scripts\activate.bat" base
 
 :: Check if the folder exists, if not, create it
-if not exist "C:\Users\J3SPM_AI_gpu" (
-    mkdir "C:\Users\J3SPM_AI_gpu"
+if not exist "%UserProfile%\J3SPM_AI_gpu" (
+    mkdir "%UserProfile%\J3SPM_AI_gpu"
 )
 
 :: 환경이 이미 존재하는지 확인합니다.
@@ -40,7 +40,7 @@ cmd /c "%script_path%install_gpuyml.bat"
 call conda activate J3SPM_AI_gpu
 
 :: Change to the working directory
-cd /d "C:\Users\J3SPM_AI_gpu"
+cd /d "%UserProfile%\J3SPM_AI_gpu"
 
 :: Clone the J3SPM AI repository
 git clone https://github.com/buildream/J3SPM_AI.git 
@@ -58,9 +58,9 @@ pip install -r requirements.txt
 cd ..\J3SPM_AI
 
 :: move files
-move *.py "C:\Users\J3SPM_AI_gpu\yolov5_J3SPM"
-move resource.qrc "C:\Users\J3SPM_AI_gpu\yolov5_J3SPM"
-move testimg.jpg "C:\Users\J3SPM_AI_gpu\yolov5_J3SPM"
+move *.py "%UserProfile%\J3SPM_AI_gpu\yolov5_J3SPM"
+move resource.qrc "%UserProfile%\J3SPM_AI_gpu\yolov5_J3SPM"
+move testimg.jpg "%UserProfile%\J3SPM_AI_gpu\yolov5_J3SPM"
 
 cd ..\yolov5_J3SPM
 
@@ -76,8 +76,3 @@ echo If you meet PyQT related error, restart console.
 :: Keep the console open to inspect any output or errors
 pause
 cmd
-
-
-
-
-
