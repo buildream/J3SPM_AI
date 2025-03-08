@@ -34,7 +34,7 @@ from pathlib import Path
 pathlib.PosixPath = pathlib.WindowsPath
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
-yolov5_dir = os.path.join(current_dir, '..', 'yolov5')
+yolov5_dir = os.path.join(current_dir, '..', 'yolov5_J3SPM')
 
 sys.path.append(yolov5_dir)
 
