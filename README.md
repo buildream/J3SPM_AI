@@ -31,9 +31,9 @@ Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder
 ## Usage
 1. Run Anaconda prompt or Anaconda powershell prompt.
 2. Activate J3SPM_AI_cpu or J3SPM_AI_gpu environment ( conda activate J3SPM_AI_cpu ).
-3. Change folder. ( cd C:\Users\username\J3SPM_AI_cpu\yolov5_J3SPM,   username=> windows login name)
+3. Change folder. ( cd C:\Users\%USERPROFILE%\J3SPM_AI_cpu\yolov5_J3SPM,   %USERPROFILE%=> windows login name)
 4. Run `python J3SPM_AI.py` in an Anaconda Prompt.
-  (ex. (J3SPM_AI_cpu) C:\users\username\J3SPM_AI_cpu\yolov5_J3SPM\python J3SPM_AI.py,   username=> windows login name)
+  (ex. (J3SPM_AI_cpu) C:\users\%USERPROFILE%\J3SPM_AI_cpu\yolov5_J3SPM\python J3SPM_AI.py,   %USERPROFILE%=> windows login name)
 
 ## YOLOv5 Segmentation model download 
 Object detection models of YOLOv5 are downloaded automatically to "yolov5_J3SPM/models" folder at the first inference.
