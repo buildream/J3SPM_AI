@@ -16,12 +16,14 @@
 
 ### Windows_CPU
 
-Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installment` folder to your computer. (ex. C:\Users\ %USERPROFILE% \cpu_install , %USERPROFILE%=> windows login name)
+Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installment` folder to your computer.  
+(ex. C:\Users\ %USERPROFILE% \cpu_install , %USERPROFILE%=> windows login name)
 
 
 ### Windows_GPU
 
-Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder to your computer. (ex. C:\Users\ %USERPROFILE% \gpu_install , %USERPROFILE%=> windows login name)
+Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder to your computer.  
+(ex. C:\Users\ %USERPROFILE% \gpu_install , %USERPROFILE%=> windows login name)
 
 
 ### Gwyddion installation
@@ -30,17 +32,20 @@ Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder
 
 ## Usage
 1. Run Anaconda prompt or Anaconda powershell prompt.
-2. Activate J3SPM_AI_cpu or J3SPM_AI_gpu environment
-    >>conda activate J3SPM_AI_cpu
-   or
-    >>conda activate J3SPM_AI_gpu
-3. Change folder.
-    >> cd C:\Users\ %USERPROFILE% \J3SPM_AI_cpu\yolov5_J3SPM,   %USERPROFILE%=> windows login name
-   or
-    >> cd C:\Users\ %USERPROFILE% \J3SPM_AI_gpu\yolov5_J3SPM,   %USERPROFILE%=> windows login name
+2. Activate environment: Type below command in an Anaconda prompt.  
+        
+    conda activate J3SPM_AI_cpu  
+    or  
+    conda activate J3SPM_AI_gpu
+3. Change folder:   Type below command in an Anaconda prompt.
+   
+   cd C:\Users\ %USERPROFILE% \J3SPM_AI_cpu\yolov5_J3SPM   (%USERPROFILE%=> windows login name.)  
+   or  
+   cd C:\Users\ %USERPROFILE% \J3SPM_AI_gpu\yolov5_J3SPM   (%USERPROFILE%=> windows login name.)  
     
-4. Run `python J3SPM_AI.py` in an Anaconda Prompt.
-    >> python J3SPM_AI.py
+4. Run `python J3SPM_AI.py` : Type below command in an Anaconda Prompt.
+   
+    python J3SPM_AI.py
 
 ## YOLOv5 Segmentation model download 
 Object detection models of YOLOv5 are downloaded automatically to "yolov5_J3SPM/models" folder at the first inference.
