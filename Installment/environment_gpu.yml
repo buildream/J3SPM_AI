@@ -1,7 +1,7 @@
 name: J3SPM_AI_gpu
 channels:
-  - defaults
   - conda-forge
+  - defaults
   - nvidia
   - pytorch
 dependencies:
@@ -16,5 +16,5 @@ dependencies:
   - git
   - labelme
   - pyserial
-  - pyqt=5
+  - pyqt=5.15.9
   - lxml
