@@ -63,10 +63,9 @@ cd ..\yolov5_J3SPM
 git clone https://github.com/buildream/labelImg_J3SPM.git
 cd labelImg_J3SPM
 pyrcc5 -o libs/resources.py resources.qrc
-cd ..\yolov5_J3SPM
+cd ..
 
 echo Intallment completed!!  Type "python J3SPM_AI.py" to run program.
-echo If you meet PyQT related error, restart console.
 
 :: Keep the console open to inspect any output or errors
 pause
