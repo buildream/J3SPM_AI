@@ -17,14 +17,15 @@
 ### Windows_CPU
 
 Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installment` folder to your computer.  
-(ex. C:\Users\ %USERPROFILE% \cpu_install , %USERPROFILE%=> windows login name)
+(ex. C:\Users\ %USERPROFILE% \cpu_install , %USERPROFILE%=> windows login name)  
+Execute 'install_cpuyml.bat' in windows.
 
 
 ### Windows_GPU
 
 Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder to your computer.  
-(ex. C:\Users\ %USERPROFILE% \gpu_install , %USERPROFILE%=> windows login name)
-
+(ex. C:\Users\ %USERPROFILE% \gpu_install , %USERPROFILE%=> windows login name)  
+Execute 'install_gpuyml.bat' in windows.
 
 ### Gwyddion installation
 
