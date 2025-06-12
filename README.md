@@ -11,7 +11,7 @@
 
 ## Installation
 
-- Install [Anaconda](https://www.anaconda.com/download/success).
+- Install [Anaconda](https://www.anaconda.com/download/success) first.
 - Install windows_cpu or windows_gpu following steps.
 
 ### Windows_CPU
