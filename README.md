@@ -18,7 +18,7 @@
 
 ### Windows_CPU
 
-Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installment` folder to your computer.  
+Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installation` folder to your computer.  
 (ex. C:\Users\ %USERPROFILE% \downloads , %USERPROFILE%=> windows login name)  
 Execute 'install_cpuyml.bat' in windows.
 
