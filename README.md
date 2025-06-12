@@ -25,7 +25,7 @@ Execute 'install_cpuyml.bat' in windows.
 
 ### Windows_GPU
 
-Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder to your computer.  
+Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installation` folder to your computer.  
 (ex. C:\Users\ %USERPROFILE% \downloads , %USERPROFILE%=> windows login name)  
 Execute 'install_gpuyml.bat' in windows.
 
