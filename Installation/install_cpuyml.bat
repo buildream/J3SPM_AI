@@ -38,7 +38,7 @@ cmd /c "%script_path%install_cpuyml.bat"
 call conda activate J3SPM_AI_cpu
 
 :: Change to the working directory
-cd /d "%UserProfile%J3SPM_AI_cpu"
+cd /d "%UserProfile%\J3SPM_AI_cpu"
 
 :: Clone the J3SPM AI repository
 git clone https://github.com/buildream/J3SPM_AI.git 
