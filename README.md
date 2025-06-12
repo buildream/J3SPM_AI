@@ -15,25 +15,32 @@
 - Install windows_cpu or windows_gpu following steps.
 
 #### If a downloaded batch file doesn't run properly, it may be due to an encoding issue. In that case, Copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
+#### The other option is download zip file and use *.yml and *.bat files in zip file.
+
 #### *.yml and *.bat files should be in the same folder.
-### Windows_CPU
+
+### Windows_CPU (No GPU)
 
 Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installation` folder to your computer.  
 (ex. C:\Users\ %USERPROFILE% \downloads , %USERPROFILE%=> windows login name)  
 Execute 'install_cpuyml.bat' in windows.
 
 
-### Windows_GPU
+### Windows_GPU (With GPU from NVIDIA)
 
 Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installation` folder to your computer.  
 (ex. C:\Users\ %USERPROFILE% \downloads , %USERPROFILE%=> windows login name)  
 Execute 'install_gpuyml.bat' in windows.
 
-### Gwyddion installation
+### Gwyddion installation : Manual installation is necessary.
 
 [Gwyddion download](http://gwyddion.net/download.php)
 
-## Usage
+## Running J3SPM AL
+### Option 1
+Execute "AIrun.bat" anywhere in windows.
+
+### Option 2
 1. Run Anaconda prompt or Anaconda powershell prompt.
 2. Activate environment: Type below command in an Anaconda prompt.  
         
