@@ -14,8 +14,8 @@
 - Install [Anaconda](https://www.anaconda.com/download/success) first.
 - Install windows_cpu or windows_gpu following steps.
 
-#### If a downloaded batch file doesn't run properly, it may be due to an encoding issue. In that case, copy the entire content of the batch file into Notepad, then save it as a new .bat file and try running that instead.
-
+#### If a downloaded batch file doesn't run properly, it may be due to an encoding issue. In that case, Copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
+#### *.yml and *.bat files should be in the same folder.
 ### Windows_CPU
 
 Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installation` folder to your computer.  
