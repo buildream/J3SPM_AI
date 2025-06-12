@@ -1,7 +1,7 @@
 name: J3SPM_AI_cpu
 channels:
-  - defaults
   - conda-forge
+  - defaults
   - pytorch
 dependencies:
   - python=3.11
@@ -13,5 +13,5 @@ dependencies:
   - git
   - labelme
   - pyserial
-  - pyqt=5
+  - pyqt=5.15.9
   - lxml
