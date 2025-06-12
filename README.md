@@ -51,17 +51,6 @@ Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installment` folder
 Object detection models of YOLOv5 are downloaded automatically to "yolov5_J3SPM/models" folder at the first inference.
 But segmentation models should be downloaded manually before using at [YOLOv5 segmentation] https://github.com/ultralytics/yolov5/discussions/10258).
 
-# Tutorial 
-cd examples/tutorial
-
-## Examples
-
-* [Image Classification](examples/classification)
-* [Bounding Box Detection](examples/bbox_detection)
-* [Semantic Segmentation](examples/semantic_segmentation)
-* [Instance Segmentation](examples/instance_segmentation)
-* [Video Annotation](examples/video_annotation)
-
 ## Acknowledgement
 
 Part of Paper: 
