@@ -13,24 +13,25 @@
 
 - Install [Anaconda](https://www.anaconda.com/download/success) first.
 - Install windows_cpu or windows_gpu following steps.
+### Option 1
+  Download zip file and use *.yml and *.bat file in zip file
 
-#### If a downloaded batch file doesn't run properly, it may be due to an encoding issue. In that case, Copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
+### Option 2
+  Copy *.yml and *.bat files in Installation folder.
+
+#### The downloaded batch file by Option 2 doesn't run properly due to an encoding issue. To solve this, copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
 #### The other option is download zip file and use *.yml and *.bat files in zip file.
-
 #### *.yml and *.bat files should be in the same folder.
 
 ### Windows_CPU (No GPU)
 
-Copy `enviroment_cpu.yml` and `install_cpuyml.bat` files in `Installation` folder to your computer.  
-(ex. C:\Users\ %USERPROFILE% \downloads , %USERPROFILE%=> windows login name)  
-Execute 'install_cpuyml.bat' in windows.
+  Execute 'install_cpuyml.bat' in windows.
 
 
 ### Windows_GPU (With GPU from NVIDIA)
 
-Copy `enviroment_gpu.yml` and `install_gpuyml.bat` files in `Installation` folder to your computer.  
-(ex. C:\Users\ %USERPROFILE% \downloads , %USERPROFILE%=> windows login name)  
-Execute 'install_gpuyml.bat' in windows.
+  Execute 'install_gpuyml.bat' in windows.
+
 
 ### Gwyddion installation : Manual installation is necessary.
 
@@ -38,22 +39,22 @@ Execute 'install_gpuyml.bat' in windows.
 
 ## Running J3SPM AI
 ### Option 1
-Execute "AIrun.bat" anywhere in windows.
+  Execute "AIrun.bat" anywhere in windows.
 
 ### Option 2
-1. Run Anaconda prompt or Anaconda powershell prompt.
-2. Activate environment: Type below command in an Anaconda prompt.  
+ 1. Run Anaconda prompt or Anaconda powershell prompt.
+ 2. Activate environment: Type below command in an Anaconda prompt.  
         
     conda activate J3SPM_AI_cpu  
     or  
     conda activate J3SPM_AI_gpu
-3. Change folder:   Type below command in an Anaconda prompt.
+ 3. Change folder:   Type below command in an Anaconda prompt.
    
    cd C:\Users\ %USERPROFILE% \J3SPM_AI_cpu\yolov5_J3SPM   (%USERPROFILE%=> windows login name.)  
    or  
    cd C:\Users\ %USERPROFILE% \J3SPM_AI_gpu\yolov5_J3SPM   (%USERPROFILE%=> windows login name.)  
     
-4. Run `python J3SPM_AI.py` : Type below command in an Anaconda Prompt.
+ 4. Run `python J3SPM_AI.py` : Type below command in an Anaconda Prompt.
    
     python J3SPM_AI.py
 
