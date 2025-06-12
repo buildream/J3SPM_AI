@@ -36,7 +36,7 @@ Execute 'install_gpuyml.bat' in windows.
 
 [Gwyddion download](http://gwyddion.net/download.php)
 
-## Running J3SPM AL
+## Running J3SPM AI
 ### Option 1
 Execute "AIrun.bat" anywhere in windows.
 
