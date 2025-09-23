@@ -1,4 +1,4 @@
-@echo off
+@echo off 
 :: Get the directory where the batch file is located
 SET "script_path=%~dp0"
 cd /d %script_path%
