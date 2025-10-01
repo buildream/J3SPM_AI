@@ -1,4 +1,6 @@
 ## Version01,release 01
+## pytorch 2.4 version <=> hbconf.py 분리함.
+## Segmentation default model 처리되도록 함.
 
 import sys
 import torch
@@ -32,13 +34,12 @@ import struct
 import pathlib
 from pathlib import Path
 pathlib.PosixPath = pathlib.WindowsPath
+from utils.downloads import attempt_download
 
 current_dir = os.path.dirname(os.path.abspath(__file__))
 yolov5_dir = os.path.join(current_dir, '..', 'yolov5_J3SPM')
 
 sys.path.append(yolov5_dir)
-
-
 
 from utils.dataloaders import LoadImages
 from utils.general import non_max_suppression, scale_boxes
@@ -431,6 +432,20 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
                 return
 
         else:                               # segmentation
+            from utils.downloads import attempt_download
+
+            fn = Path(self.mdname).name if isinstance(self.mdname, str) else ''
+            if (not fn) or ('-seg' not in fn):
+                # 사용자가 모델을 선택 안 했거나 탐지용을 잡아온 경우 → seg로 교체
+                try:
+                    # 사용자 기본 크기와 맞추려면 s/m/l/x를 추론해 치환해도 되지만
+                    # 지정이 없을 때는 s로 통일
+                    self.mdname = attempt_download('yolov5s-seg.pt')
+                except Exception:
+                    # 네트워크/권한 문제 등일 때도 s-seg로 한 번 더 시도
+                    self.mdname = './yolov5s-seg.pt'  # 로컬에 있을 수도 있음
+
+            self.segment_code(device, model)
             self.segment_code(device,model)
 
 
@@ -701,7 +716,39 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
         (save_dir / "labels" if save_txt else save_dir).mkdir(parents=True, exist_ok=True)  # make dir
 
         # Load model
-        model = DetectMultiBackend(self.mdname, device=device, dnn=dnn, data='', fp16=half)
+        # model = DetectMultiBackend(self.mdname, device=device, dnn=dnn, data='', fp16=half)
+
+       # --- SEG weights auto-resolve & auto-download --------------------------------
+        weights_in = self.mdname[0] if isinstance(self.mdname, (list, tuple)) else self.mdname
+        p = Path(str(weights_in)).expanduser()
+
+        def _force_to_seg(name: str) -> str:
+            # yolov5s.pt -> yolov5s-seg.pt
+            return name.replace('.pt', '-seg.pt') if name.endswith('.pt') and '-seg' not in name else name
+
+        if p.exists():
+            # ★ 파일이 있어도 탐지용이면 seg로 교체 + 다운로드(없으면 받기)
+            if '-seg' not in p.name:
+                LOGGER.warning(f"WARNING ⚠️ '{p.name}'는 탐지 전용으로 보입니다. 세그멘테이션 가중치('-seg')로 교체합니다.")
+                try:
+                    seg_weights = attempt_download(_force_to_seg(p.name))
+                except Exception:
+                    seg_weights = attempt_download('yolov5s-seg.pt')
+            else:
+                seg_weights = str(p)
+        else:
+            # 없으면 이름 교정 후 다운로드
+            name = p.name or str(weights_in) or "yolov5s-seg.pt"
+            name = _force_to_seg(name)
+            try:
+                seg_weights = attempt_download(name)
+            except Exception:
+                seg_weights = attempt_download("yolov5s-seg.pt")
+        # -----------------------------------------------------------------------------
+
+        # Load model (세그 가중치 경로로 강제)
+        model = DetectMultiBackend(seg_weights, device=device, dnn=dnn, data='', fp16=half)
+
         stride, names, pt = model.stride, model.names, model.pt
         imgsz = check_img_size(imgsz, s=stride)  # check image size
 
