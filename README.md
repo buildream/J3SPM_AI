@@ -39,7 +39,7 @@
 
 ## Running J3SPM AI
 ### Option 1
- - Execute "AIrun.bat" in J3SPM_AI folder.
+ - Execute "AIrun.bat" in "J3SPM_AI" folder.
 
 ### Option 2
  1. Run Anaconda prompt or Anaconda powershell prompt.
