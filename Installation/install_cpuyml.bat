@@ -49,6 +49,11 @@ git clone https://github.com/buildream/yolov5_J3SPM.git
 :: Change directory to yolov5
 cd yolov5_J3SPM
 
+:: Install numpy, scipy using conda
+call conda install -y -c conda-forge "numpy=1.26.*" "scipy=1.11.*"
+:: python -m pip install -U pip
+
+
 :: Install pip requirements
 pip install -r requirements.txt
 
