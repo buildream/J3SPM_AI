@@ -20,7 +20,7 @@
 #### Option 2
   - Copy *.yml and *.bat files in Installation folder.
 
- #### The downloaded batch file by Option 2 doesn't run properly due to an encoding issue. To solve this, copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
+ #### The downloaded batch file by Option 2 might not run properly due to an encoding issue. To solve this, copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
  
 ### Windows_CPU (No GPU)
 
@@ -39,7 +39,7 @@
 
 ## Running J3SPM AI
 ### Option 1
- - Execute "AIrun.bat" anywhere in windows.
+ - Execute "AIrun.bat" in J3SPM_AI folder.
 
 ### Option 2
  1. Run Anaconda prompt or Anaconda powershell prompt.
@@ -59,10 +59,10 @@
     - python J3SPM_AI.py
 
 ## YOLOv5 Segmentation model download 
-Object detection models of YOLOv5 are downloaded automatically to "yolov5_J3SPM/models" folder at the first inference.
-But segmentation models should be downloaded manually before using at [YOLOv5 segmentation] https://github.com/ultralytics/yolov5/discussions/10258).
+Object detection and segmentation models of YOLOv5 are downloaded automatically to "yolov5_J3SPM" folder at the first inference.
 
 ## Example movies
+- [Install and basic test](https://youtu.be/zuVcmX59AxM)
 - [Gwyddion in J3SPM AI](https://youtu.be/Wx5QTSIW67k)
 - [Data Labeling in J3SSPM AI](https://youtu.be/2zr7aIva0Sg)
 - [Training model in J3SPM AI](https://youtu.be/vnacNW7F0hE)
