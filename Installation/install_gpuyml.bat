@@ -51,8 +51,12 @@ git clone https://github.com/buildream/yolov5_J3SPM.git
 :: Change directory to yolov5
 cd yolov5_J3SPM
 
+:: Install numpy, scipy using conda
+call conda install -y -c conda-forge "numpy=1.26.*" "scipy=1.11.*"
+:: python -m pip install -U pip
+
 :: Install pip requirements
-pip install -r requirements.txt
+pip install -r requirements.txt --constraint constraints.txt
 
 :: Further setup commands (optional)
 cd ..\J3SPM_AI
@@ -74,4 +78,4 @@ echo Intallment completed!!  Type "python J3SPM_AI.py" to run program.
 
 :: Keep the console open to inspect any output or errors
 pause
-cmd
+cmd /k
