@@ -55,7 +55,7 @@ call conda install -y -c conda-forge "numpy=1.26.*" "scipy=1.11.*"
 
 
 :: Install pip requirements
-pip install -r requirements.txt
+pip install -r requirements.txt --constraint constraints.txt
 
 
 :: Further setup commands (optional)
