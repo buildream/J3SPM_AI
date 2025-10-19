@@ -1296,7 +1296,8 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
         cv2.imwrite(self.resname, original_image)
 
     def pixel2length(self, area):
-        ratio=self.dSB_Xlength.value()/self.imWidth
+        #ratio=self.dSB_Xlength.value()/self.imWidth
+        ratio=self.dSB_Xlength.value()/(self.sB_ReXZ.value()-1)
         scaled = [float(element * ratio) for element in area]
         return scaled
     
@@ -1358,3 +1359,4 @@ if __name__ == '__main__':
     ex = MainWindow()
     ex.show()
     sys.exit(app.exec_())
+
