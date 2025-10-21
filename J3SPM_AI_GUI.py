@@ -353,6 +353,7 @@ class Ui_MainWindow(object):
         self.dSB_Xlength.setGeometry(QtCore.QRect(98, 330, 71, 22))
         self.dSB_Xlength.setObjectName("dSB_Xlength")
         self.dSB_Xlength.setValue(10)
+        self.dSB_Xlengh.setMaxium(1000)
         self.dSB_L2volt = QtWidgets.QDoubleSpinBox(self.tab_5)
         self.dSB_L2volt.setGeometry(QtCore.QRect(20, 380, 71, 22))
         self.dSB_L2volt.setObjectName("dSB_L2volt")
@@ -709,4 +710,5 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), _translate("MainWindow", "Settings"))
 
 import resource_rc
+
 
