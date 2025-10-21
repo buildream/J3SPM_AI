@@ -64,9 +64,11 @@ Object detection and segmentation models of YOLOv5 are downloaded automatically 
 ## Example movies
 - [Install and basic test](https://youtu.be/zuVcmX59AxM)
 - [Gwyddion in J3SPM AI](https://youtu.be/Wx5QTSIW67k)
-- [Data Labeling in J3SSPM AI](https://youtu.be/2zr7aIva0Sg)
+- [Dataset preparation for training in J3SPM AI](https://youtu.be/dSb8vSxUbJc)
+- [Data Labeling for obeject detection and segmentation in J3SSPM AI](https://youtu.be/2zr7aIva0Sg)
 - [Training model in J3SPM AI](https://youtu.be/vnacNW7F0hE)
-- [Inference & Zoom scan in J3SPM AI](https://youtu.be/Fy-IjJs9J2w)
+- [Inference & Zoom scan in J3SPM AI with DVD fit length AI model](https://youtu.be/zgs247gm3BY)
+- [Inference & Zoom scan in J3SPM AI with common object AI model](https://youtu.be/Fy-IjJs9J2w)
 
 ## Acknowledgement
 
