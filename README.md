@@ -37,7 +37,7 @@
 
 - [Gwyddion download](http://gwyddion.net/download.php)
 
-## Running J<sub>3</sup>SPM AI
+## Running J<sup>3</sup>SPM AI
 ### Option 1
  - Execute "AIrun.bat" in "J3SPM_AI" folder.
 
