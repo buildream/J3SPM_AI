@@ -9,7 +9,7 @@
 - [x] Training, inference at high speed with YOLOv5. ([YOLOv5](https://github.com/ultralytics/yolov5))
 
 
-## Installation
+## Installation (*To reinstall, please make sure to remove the previous installation directory*)
 
 - Install [Anaconda](https://www.anaconda.com/download/success) first. (Don't add Anaconda to my PATH enviroment variable while installing)
 - Install windows_cpu or windows_gpu following steps.
