@@ -70,7 +70,7 @@ Object detection and segmentation models of YOLOv5 are downloaded automatically 
 - [Inference & Zoom scan in J3SPM AI with DVD fit length AI model](https://youtu.be/zgs247gm3BY)
 - [Inference & Zoom scan in J3SPM AI with common object AI model](https://youtu.be/Fy-IjJs9J2w)
 
-- [Training YOLOv5 model in Google colab](https://www.youtube.com/watch?v=YfryRAA26ZE)
+- [Training YOLOv5 model in Google colab](https://youtu.be/YfryRAA26ZE)
 
 ## Acknowledgement
 
