@@ -1,87 +1,99 @@
 @echo off
-setlocal enabledelayedexpansion
+setlocal EnableExtensions EnableDelayedExpansion
 
 :: ==============================================================
-:: Move to the folder where this batch file lives
+:: CONFIG
 :: ==============================================================
-SET "script_path=%~dp0"
-cd /d "%script_path%"
+set "workdir=C:\Users\PC\J3SPM_AI_cpu\yolov5_J3SPM"
+set "entry=J3SPM_AI.py"
 
-:: ==============================================================
-:: Initialize Conda (adjust the path if your Anaconda location differs)
-:: ==============================================================
-call "%UserProfile%\anaconda3\Scripts\activate.bat" base
-
-:: ==============================================================
-:: Check if GPU / CPU environments exist
-:: ==============================================================
-set "env_gpu=J3SPM_AI_gpu"
-set "env_cpu=J3SPM_AI_cpu"
-
-set "has_gpu="
-set "has_cpu="
-
-:: Look for environment names in `conda env list` output
-conda env list | findstr /i /c:"%env_gpu%" >nul && set "has_gpu=1"
-conda env list | findstr /i /c:"%env_cpu%" >nul && set "has_cpu=1"
-
-:: If neither environment exists, stop here
-if not defined has_gpu if not defined has_cpu (
-  echo [ERROR] Neither "%env_gpu%" nor "%env_cpu%" exists.
-  pause
-  exit /b 1
-)
-
-:: ==============================================================
-:: If both exist, let the user choose; otherwise auto-select
-:: ==============================================================
-if defined has_gpu if defined has_cpu (
-  echo.
-  echo Both environments are available. Please choose:
-  echo   [1] %env_gpu%  (GPU^) 
-  echo   [2] %env_cpu%  (CPU^)
-  choice /c 12 /n /m "Select (1/2): "
-  if errorlevel 2 set "env_name=%env_cpu%"
-  if errorlevel 1 if not defined env_name set "env_name=%env_gpu%"
-) else (
-  if defined has_gpu set "env_name=%env_gpu%"
-  if defined has_cpu set "env_name=%env_cpu%"
-)
-
-:: ==============================================================
-:: Activate the selected Conda environment
-:: ==============================================================
 echo.
-echo Activating Conda environment: %env_name%
-call conda activate "%env_name%" || (
-  echo [ERROR] Failed to activate: %env_name%
-  pause
-  exit /b 1
-)
+echo Activating Conda environment:
+echo.
 
 :: ==============================================================
-:: Change to working directory for the app
-:: NOTE: Adjust the path below if your folder structure is different.
+:: Check working directory
 :: ==============================================================
-set "workdir=%UserProfile%\%env_name%\yolov5_J3SPM"
 if not exist "%workdir%" (
   echo [ERROR] Working directory not found: "%workdir%"
-  echo Please update the workdir path near the bottom of this script.
-  pause
-  exit /b 1
+  echo Please update the workdir path near the top of this script.
+  goto :end
 )
 cd /d "%workdir%"
 
 :: ==============================================================
-:: Run the program and keep the console open afterwards
+:: Initialize Conda (Anaconda or Miniconda)
+:: ==============================================================
+set "ACTIVATE_BAT=%UserProfile%\anaconda3\Scripts\activate.bat"
+if not exist "%ACTIVATE_BAT%" set "ACTIVATE_BAT=%UserProfile%\miniconda3\Scripts\activate.bat"
+if not exist "%ACTIVATE_BAT%" (
+  echo [ERROR] Could not find conda activate.bat under %%UserProfile%%\anaconda3 or %%UserProfile%%\miniconda3
+  echo Please adjust the path to your Conda installation.
+  goto :end
+)
+
+call "%ACTIVATE_BAT%" >nul 2>&1
+if errorlevel 1 (
+  echo [ERROR] Failed to initialize conda.
+  goto :end
+)
+
+:: ==============================================================
+:: Discover ONLY the allowed environments
+::   - J3SPM_AI_gpu
+::   - J3SPM_AI_cpu
+:: ==============================================================
+set "HAS_GPU="
+set "HAS_CPU="
+for /f "tokens=1" %%E in ('conda env list ^| findstr /R "^[A-Za-z0-9._-]"') do (
+  if /I "%%E"=="J3SPM_AI_gpu" set "HAS_GPU=1"
+  if /I "%%E"=="J3SPM_AI_cpu" set "HAS_CPU=1"
+)
+
+if not defined HAS_GPU if not defined HAS_CPU (
+  echo [ERROR] Neither "J3SPM_AI_gpu" nor "J3SPM_AI_cpu" was found.
+  echo Please create one of these environments first.
+  goto :end
+)
+
+if defined HAS_GPU if not defined HAS_CPU (
+  set "TARGET_ENV=J3SPM_AI_gpu"
+  goto :have_env
+)
+
+if defined HAS_CPU if not defined HAS_GPU (
+  set "TARGET_ENV=J3SPM_AI_cpu"
+  goto :have_env
+)
+
+:: If both exist, ask the user to choose
+echo Available environments:
+echo   1) J3SPM_AI_gpu
+echo   2) J3SPM_AI_cpu
+echo.
+set /p "CHOICE=Select environment number to activate (1/2, default 1): "
+if not defined CHOICE set "CHOICE=1"
+if "%CHOICE%"=="2" ( set "TARGET_ENV=J3SPM_AI_cpu" ) else ( set "TARGET_ENV=J3SPM_AI_gpu" )
+
+:have_env
+echo.
+echo Activating: "!TARGET_ENV!"
+call conda activate "!TARGET_ENV!"
+if errorlevel 1 (
+  echo [ERROR] Failed to activate "!TARGET_ENV!".
+  goto :end
+)
+
+:: ==============================================================
+:: Run the program
 :: ==============================================================
 echo.
-echo Running: python J3SPM_AI.py
-echo (The console will stay open after exit)
-echo.
-python J3SPM_AI.py
+echo Running: python "%entry%"
+python "%entry%"
+set "RC=%ERRORLEVEL%"
 
+:end
 echo.
-echo [DONE] Program exited.
-:: pause
-exit /b 0
+echo [DONE] Exit code: %RC%
+pause
+exit /b %RC%
