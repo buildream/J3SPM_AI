@@ -15,10 +15,12 @@
 - Install windows_cpu or windows_gpu following steps.
 ### File downloads (*.yml, *.bat)
 #### Option 1
-  - Download zip file through main page and use *.yml and *.bat file in zip file
+  - Download zip file through main page.
+  - Unzip zip file => you will see *.yml and *.bat files in installation folder.
 
 #### Option 2
-  - Copy *.yml and *.bat files in Installation folder.
+  - Copy the code from the *.yml and *.bat files in the Installation folder on GitHub.
+  - Create new *.yml and *.bat files on your local computer.
 
  #### The downloaded batch file by Option 2 might not run properly due to an encoding issue. To solve this, copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
  
