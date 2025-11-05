@@ -9,7 +9,7 @@
 - [x] Training, inference at high speed with YOLOv5. ([YOLOv5](https://github.com/ultralytics/yolov5))
 
 
-## Installation (*To reinstall, please make sure to remove the previous installation folder*)
+## Installation (*Please remove the previously installed folder before reinstalling *)
 
 - Install [Anaconda](https://www.anaconda.com/download/success) first. (Don't add Anaconda to my PATH enviroment variable while installing)
 - Install windows_cpu or windows_gpu following steps.
@@ -39,7 +39,7 @@
 
 ## Running J<sup>3</sup>SPM AI
 ### Option 1
- - Execute "AIrun.bat" in "J3SPM_AI" folder.
+ - Execute "AIrun.bat" in "J3SPM_AI" folder.  (C:\Users\ %USERPROFILE% \J3SPM_AI_cpu or gpu\J3SPM_AI)
 
 ### Option 2
  1. Run Anaconda prompt or Anaconda powershell prompt.
