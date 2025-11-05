@@ -50,9 +50,9 @@
     - conda activate J3SPM_AI_gpu
  3. Change folder:   Type below command in an Anaconda prompt.
    
-    - cd C:\Users\ %USERPROFILE% \J3SPM_AI_cpu\yolov5_J3SPM   (%USERPROFILE%=> windows login name.)  
+    - cd C:\Users\ %USERNAME% \J3SPM_AI_cpu\yolov5_J3SPM   (%USERPNAME%=> windows login name.)  
    or  
-    - cd C:\Users\ %USERPROFILE% \J3SPM_AI_gpu\yolov5_J3SPM   (%USERPROFILE%=> windows login name.)  
+    - cd C:\Users\ %USERPNAME% \J3SPM_AI_gpu\yolov5_J3SPM   (%USERNAME%=> windows login name.)  
     
  4. Run `python J3SPM_AI.py` : Type below command in an Anaconda Prompt.
    
