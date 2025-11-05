@@ -4,7 +4,7 @@ setlocal EnableExtensions EnableDelayedExpansion
 :: ==============================================================
 :: CONFIG
 :: ==============================================================
-set "workdir=C:\Users\PC\J3SPM_AI_cpu\yolov5_J3SPM"
+set "workdir=%UserProfile%\J3SPM_AI_cpu\yolov5_J3SPM"
 set "entry=J3SPM_AI.py"
 
 echo.
