@@ -14,6 +14,8 @@
 > 
 ### 1. Install Dependencies  
 - Install [Anaconda](https://www.anaconda.com/download/success) first.
+>⚠️ *NO Miniconda, Anaconda!!*
+>
 >⚠️ *Do NOT add Anaconda to the PATH environment variable during installation.*
 >
 ### 2. Download Installation Files  
