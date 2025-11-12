@@ -76,12 +76,12 @@ The segmentation/detection models are **downloaded automatically** into the `yol
 
 ## 🎬 Example Movies
 - [Install and basic test](https://youtu.be/zuVcmX59AxM)
-- [Gwyddion in J3SPM AI](https://youtu.be/Wx5QTSIW67k)
-- [Dataset preparation for training in J3SPM AI](https://youtu.be/dSb8vSxUbJc)
-- [Data Labeling for obeject detection and segmentation in J3SSPM AI](https://youtu.be/2zr7aIva0Sg)
-- [Training model in J3SPM AI](https://youtu.be/vnacNW7F0hE)
-- [Inference & Zoom scan in J3SPM AI with DVD fit length AI model](https://youtu.be/zgs247gm3BY)
-- [Inference & Zoom scan in J3SPM AI with common object AI model](https://youtu.be/Fy-IjJs9J2w)
+- [Gwyddion in J<sup>3</sup>SPM AI](https://youtu.be/Wx5QTSIW67k)
+- [Dataset preparation for training in J<sup>3</sup>SPM AI](https://youtu.be/dSb8vSxUbJc)
+- [Data Labeling for obeject detection and segmentation in J<sup>3</sup>SPM AI](https://youtu.be/2zr7aIva0Sg)
+- [Training model in J<sup>3</sup>SPM AI](https://youtu.be/vnacNW7F0hE)
+- [Inference & Zoom scan in J<sup>3</sup>SPM AI with DVD fit length AI model](https://youtu.be/zgs247gm3BY)
+- [Inference & Zoom scan in J<sup>3</sup>SPM AI with common object AI model](https://youtu.be/Fy-IjJs9J2w)
 
 - [Training YOLOv5 model in Google colab](https://youtu.be/YfryRAA26ZE)
 
