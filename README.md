@@ -75,5 +75,8 @@ Object detection and segmentation models of YOLOv5 are downloaded automatically 
 - [Training YOLOv5 model in Google colab](https://youtu.be/YfryRAA26ZE)
 
 ## Acknowledgement
-
 Part of Paper: 
+
+## 📢 **Questions or issues?**  
+Please use the [Issues](https://github.com/buildream/J3SPM_AI/issues) or [Discussions](https://github.com/buildream/J3SPM_AI/discussions) tabs.
+
