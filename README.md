@@ -9,7 +9,7 @@
 - [x] Training, inference at high speed with YOLOv5. ([YOLOv5](https://github.com/ultralytics/yolov5))
 
 
-## Installation 
+## 🖥️ Installation 
 ### **⚠️ Note:** Please remove any previously installed J3SPM_AI folders before reinstalling.
 > 
 ### 1. Install Dependencies  
@@ -33,7 +33,7 @@ YAML files (`*.yml`) and batch files (`*.bat`) are required.
 > To fix: open the `.bat` file in Notepad → re-save with the same name.
 
 >
-### 🖥️ Environment Installation
+### 3. Installation
 
 #### Option 1: Windows_CPU (No GPU)
 
