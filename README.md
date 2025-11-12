@@ -47,9 +47,9 @@ YAML files (`*.yml`) and batch files (`*.bat`) are required.
 > ⚠️ `*.yml` and `*.bat` files **must be in the same folder**.
 > 
 
-#### 🔧 Gwyddion Installation (Manual)
-Download from:  
-👉 http://gwyddion.net/download.php
+#### Gwyddion Installation (Manual)
+- Download from:  
+ 👉 http://gwyddion.net/download.php
 
 >
 ## ▶️ Running J<sup>3</sup>SPM AI
