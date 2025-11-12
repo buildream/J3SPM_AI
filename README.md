@@ -9,41 +9,52 @@
 - [x] Training, inference at high speed with YOLOv5. ([YOLOv5](https://github.com/ultralytics/yolov5))
 
 
-## Installation (*Please remove the previously installed folder before reinstalling *)
+## Installation 
+### **⚠️ Note:** Please remove any previously installed J3SPM_AI folders before reinstalling.
+> 
+### 1. Install Dependencies  
+- Install [Anaconda](https://www.anaconda.com/download/success) first.
+>⚠️ *Do NOT add Anaconda to the PATH environment variable during installation.*
+>
+### 2. Download Installation Files  
+YAML files (`*.yml`) and batch files (`*.bat`) are required.
 
-- Install [Anaconda](https://www.anaconda.com/download/success) first. (Don't add Anaconda to my PATH enviroment variable while installing)
-- Install windows_cpu or windows_gpu following steps.
-### File downloads (*.yml, *.bat)
-#### Option 1
-  - Download zip file through main page.
-  - Unzip zip file => you will see *.yml and *.bat files in installation folder.
+#### Option 1 (recommended)
+1. Download Zip from the GitHub main page.
+2. Unzip → the installation folder will contain `*.yml` and `*.bat` files.
 
 #### Option 2
-  - Copy the code from the *.yml and *.bat files in the Installation folder on GitHub.
-  - Create new *.yml and *.bat files on your local computer.
+1. Copy the contents of the YAML and BAT files from GitHub.  
+2. Create new `*.yml` / `*.bat` files manually on your computer.
 
- #### The downloaded batch file by Option 2 might not run properly due to an encoding issue. To solve this, copy the contents of the batch file into Notepad, and save it with the same name to overwrite the existing batch file.
- 
+> ⚠️ Batch files created manually may not run due to encoding issues.  
+> To fix: open the `.bat` file in Notepad → re-save with the same name.
+
+>
+## 🖥️ Environment Installation
+
 ### Windows_CPU (No GPU)
 
-  - Execute "install_cpuyml.bat" in windows.
+  - Run "install_cpuyml.bat" in windows.
 
 
 ### Windows_GPU (With GPU from NVIDIA)
 
- - Execute "install_gpuyml.bat" in windows.
+ - Run "install_gpuyml.bat" in windows.
 
-#### *.yml and *.bat files should be in the same folder.
+> ⚠️ `*.yml` and `*.bat` files **must be in the same folder**.
+> 
 
-### Gwyddion installation : Manual installation is necessary.
+### 🔧 Gwyddion Installation (Manual)
+Download from:  
+👉 http://gwyddion.net/download.php
 
-- [Gwyddion download](http://gwyddion.net/download.php)
+>
+## ▶️ Running J<sup>3</sup>SPM AI
+### **Option 1 (Simple)**
+ - Run "AIrun.bat" in "J3SPM_AI" folder.  (C:\Users\ %USERPROFILE% \J3SPM_AI_cpu or gpu\J3SPM_AI)
 
-## Running J<sup>3</sup>SPM AI
-### Option 1
- - Execute "AIrun.bat" in "J3SPM_AI" folder.  (C:\Users\ %USERPROFILE% \J3SPM_AI_cpu or gpu\J3SPM_AI)
-
-### Option 2
+### **Option 2 (Manual Execution)**
  1. Run Anaconda prompt or Anaconda powershell prompt.
  2. Activate environment: Type below command in an Anaconda prompt.  
         
@@ -60,10 +71,10 @@
    
     - python J3SPM_AI.py
 
-## YOLOv5 Segmentation model download 
-Object detection and segmentation models of YOLOv5 are downloaded automatically to "yolov5_J3SPM" folder at the first inference.
+## 📥 YOLOv5 Segmentation Model Download
+The segmentation/detection models are **downloaded automatically** into the `yolov5_J3SPM` folder on the first inference.
 
-## Example movies
+## 🎬 Example Movies
 - [Install and basic test](https://youtu.be/zuVcmX59AxM)
 - [Gwyddion in J3SPM AI](https://youtu.be/Wx5QTSIW67k)
 - [Dataset preparation for training in J3SPM AI](https://youtu.be/dSb8vSxUbJc)
@@ -74,7 +85,7 @@ Object detection and segmentation models of YOLOv5 are downloaded automatically 
 
 - [Training YOLOv5 model in Google colab](https://youtu.be/YfryRAA26ZE)
 
-## Acknowledgement
+## 📑 Acknowledgement
 Part of Paper: 
 
 ## 📢 **Questions or issues?**  
