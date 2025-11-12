@@ -31,21 +31,21 @@ YAML files (`*.yml`) and batch files (`*.bat`) are required.
 > To fix: open the `.bat` file in Notepad → re-save with the same name.
 
 >
-## 🖥️ Environment Installation
+### 🖥️ Environment Installation
 
-### Windows_CPU (No GPU)
+#### Windows_CPU (No GPU)
 
   - Run "install_cpuyml.bat" in windows.
 
 
-### Windows_GPU (With GPU from NVIDIA)
+#### Windows_GPU (With GPU from NVIDIA)
 
  - Run "install_gpuyml.bat" in windows.
 
 > ⚠️ `*.yml` and `*.bat` files **must be in the same folder**.
 > 
 
-### 🔧 Gwyddion Installation (Manual)
+#### 🔧 Gwyddion Installation (Manual)
 Download from:  
 👉 http://gwyddion.net/download.php
 
