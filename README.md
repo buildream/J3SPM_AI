@@ -73,8 +73,10 @@ YAML files (`*.yml`) and batch files (`*.bat`) are required.
    
     - python J3SPM_AI.py
 
-## 📥 YOLOv5 Segmentation Model Download
-The segmentation/detection models are **downloaded automatically** into the `yolov5_J3SPM` folder on the first inference.
+#### 📥 YOLOv5 Model Download
+The default YOLOv5 segmentation and detection models are automatically downloaded 
+to the `yolov5_J3SPM` folder the **first time you run inference**.
+
 
 ## 🎬 Example Movies
 - [Install and basic test](https://youtu.be/zuVcmX59AxM)
