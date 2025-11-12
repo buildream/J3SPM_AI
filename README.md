@@ -35,12 +35,12 @@ YAML files (`*.yml`) and batch files (`*.bat`) are required.
 >
 ### 🖥️ Environment Installation
 
-#### Windows_CPU (No GPU)
+#### Option 1: Windows_CPU (No GPU)
 
   - Run "install_cpuyml.bat" in windows.
 
 
-#### Windows_GPU (With GPU from NVIDIA)
+#### Option 2: Windows_GPU (With GPU from NVIDIA)
 
  - Run "install_gpuyml.bat" in windows.
 
