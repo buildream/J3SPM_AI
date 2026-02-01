@@ -1349,10 +1349,22 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
             self.SPM_finder.tcp_connection = True
             self.displayFormattedText1(self.tBR_Serialput,"Connection closed")
 
+ #   def do_Editclass(self):
+ #       file_clas=self.openFileNameDialog(5)
+ #       if file_clas:
+ #           subprocess.run(['notepad.exe',file_clas])
+
     def do_Editclass(self):
-        file_clas=self.openFileNameDialog(5)
-        if file_clas:
-            subprocess.run(['notepad.exe',file_clas])
+        import os, subprocess
+
+        current_dir = os.path.dirname(os.path.abspath(__file__))  # J3SPM_AI.py가 있는 폴더 (yolov5_J3SPM)
+        file_clas = os.path.join(current_dir, 'labelImg_J3SPM', 'data', 'predefined_classes.txt')
+
+        if os.path.exists(file_clas):
+            subprocess.run(['notepad.exe', file_clas])
+        else:
+            print("Cannot find:", file_clas)
+
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
