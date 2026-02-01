@@ -275,7 +275,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
                 shutil.copy(file_path, destination_folder)
         
         if self.folder_path:
-            img_files = [os.path.join(self.folder_path, f) for f in os.listdir(self.folder_path) if f.endswith(('.png', '.jpg', '.jpeg','.PNG','.JPG','.webp'))]
+            img_files = [os.path.join(self.folder_path, f) for f in os.listdir(self.folder_path) if f.endswith(('.png', '.jpg', '.jpeg','.PNG','.JPG','.webp','.bmp'))]
             txt_files = [os.path.join(self.folder_path, f) for f in os.listdir(self.folder_path) if f.endswith('.txt')]
             
             if not img_files or not txt_files:
