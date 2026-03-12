@@ -92,8 +92,9 @@ to the `yolov5_J3SPM` folder the **first time you run inference**.
 - [Training YOLOv5 model in Google colab](https://youtu.be/YfryRAA26ZE)
 
 ## 📑 Acknowledgement
-Part of Paper: 
+Part of this work is described in the following paper:
 
+S. Lee, **"J³SPM AI: An Integrated Open-Source Platform for AI-Assisted Image Analysis and Image-Guided Workflows in Scanning Probe Microscopy,"**  *Micron*, 2026.  DOI: https://doi.org/10.1016/j.micron.2026.104017
 ## 📢 **Questions or issues?**  
 Please use the [Issues](https://github.com/buildream/J3SPM_AI/issues) or [Discussions](https://github.com/buildream/J3SPM_AI/discussions) tabs.
 
