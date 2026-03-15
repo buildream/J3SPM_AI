@@ -156,6 +156,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.label_30, 4, 3, 1, 1)
         self.sB_Batch = QtWidgets.QSpinBox(self.gridLayoutWidget)
         self.sB_Batch.setObjectName("sB_Batch")
+        self.sB_Batch.setMinimum(-1) 
         self.sB_Batch.setMaximum(500)
         self.sB_Batch.setValue(2)
         self.gridLayout_6.addWidget(self.sB_Batch, 1, 2, 1, 1)
