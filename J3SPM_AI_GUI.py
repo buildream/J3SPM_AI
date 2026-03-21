@@ -1223,7 +1223,7 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         _translate = QtCore.QCoreApplication.translate
-        MainWindow.setWindowTitle(_translate("MainWindow", "J3SPM_AIMODULE V1.0.0"))
+        MainWindow.setWindowTitle(_translate("MainWindow", "J3SPM_AIMODULE V1.0.1"))
       
         self.pB_Gwyddion.setText(_translate("MainWindow", "Gwyddion"))
         self.pB_Labelstudio.setText(_translate("MainWindow", "Labelimg"))
