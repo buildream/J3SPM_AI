@@ -459,7 +459,7 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
 
         if self.sB_IPixes.value() > 0:
             command.extend(['--img', str(self.sB_IPixes.value())])
-        if self.sB_Batch.value() > 0:
+        if self.sB_Batch.value() == -1 or self.sB_Batch.value() > 0:
             command.extend(['--batch', str(self.sB_Batch.value())])
         if self.sB_Epochs.value() > 0:
             command.extend(['--epochs', str(self.sB_Epochs.value())])
