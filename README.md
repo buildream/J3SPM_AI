@@ -10,7 +10,7 @@
 
 
 ## 🖥️ Installation 
-### **⚠️ Note:** Please remove any previously installed J3SPM_AI folders before reinstalling.
+### **⚠️ Note:** Please remove any previously installed J3SPM_AI folders andk backup your works before reinstalling.
 > 
 ### 1. Install Dependencies  
 - Install [Anaconda](https://www.anaconda.com/download/success) first.
