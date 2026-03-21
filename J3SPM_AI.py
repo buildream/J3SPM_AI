@@ -1,6 +1,7 @@
 ## Version01,release 01
 ## pytorch 2.4 version <=> hbconf.py 분리함.
 ## Segmentation default model 처리되도록 함.
+## Video 2 image 추가.
 
 import sys
 import torch
@@ -9,8 +10,8 @@ import numpy as np
 import matplotlib.pyplot as plt
 from matplotlib import gridspec
 from matplotlib.backends.backend_qt5agg import FigureCanvasQTAgg as FigureCanvas
-from PyQt5.QtCore import QThread, pyqtSignal
-from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QTabWidget, QTextEdit, QPushButton, QVBoxLayout, QWidget, QToolButton, QFileDialog, QMessageBox
+from PyQt5.QtCore import QThread, pyqtSignal, Qt
+from PyQt5.QtWidgets import QApplication, QLabel, QMainWindow, QTabWidget, QTextEdit, QPushButton, QVBoxLayout, QWidget, QToolButton, QFileDialog, QMessageBox, QProgressDialog
 
 from mpl_toolkits.mplot3d import Axes3D
 import subprocess
@@ -71,6 +72,7 @@ from utils.general import (
     xyxy2xywh,
 )
 import csv
+import json
 import platform
 
 from utils.segment.general import masks2segments, process_mask, process_mask_native
@@ -249,20 +251,122 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
     def do_labelme(self):
         file_path = 'labelme'
         subprocess.run([file_path])
-
     def do_labelme2yolo(self):
-        json_directory = QFileDialog.getExistingDirectory(self,"Select json Folder")
+        """Convert Labelme JSON annotations to YOLOv5 TXT labels (NO train/val/test split).
+
+        Output:
+          - One .txt per image/json in the SAME folder as the images/jsons.
+          - classes.txt in the selected folder (one class name per line).
+        """
+        json_directory = QFileDialog.getExistingDirectory(self, "Select json Folder")
         if not json_directory:
             QMessageBox.warning(self, "Warning", "No directory selected. Operation cancelled.")
             return None
-        else:
-            labelme_to_yolo = Labelme2YOLO(json_dir=json_directory)
-            labelme_to_yolo.convert(val_size=float(self.lE_ValidR.text())*0.01,test_size=float(self.lE_TestR.text())*0.01)
-            self.dialog_box("Converting completed.")
 
+        json_dir = Path(json_directory)
+        json_files = sorted(json_dir.glob("*.json"))
+        if not json_files:
+            QMessageBox.warning(self, "Warning", "No .json files found in the selected folder.")
+            return None
+
+        # 1) Collect labels (stable ordering)
+        labels = []
+        for jf in json_files:
+            try:
+                data = json.loads(jf.read_text(encoding="utf-8"))
+            except Exception:
+                # fallback for non-utf8 json
+                data = json.loads(jf.read_text(encoding="utf-8", errors="ignore"))
+            for shp in data.get("shapes", []):
+                lab = shp.get("label", "")
+                if lab and lab not in labels:
+                    labels.append(lab)
+
+        if not labels:
+            QMessageBox.warning(self, "Warning", "No labels found in json shapes. Nothing to convert.")
+            return None
+
+        # Write/overwrite classes.txt (used later by Compose dataset)
+        (json_dir / "classes.txt").write_text("\n".join(labels) + "\n", encoding="utf-8")
+
+        label_to_id = {lab: i for i, lab in enumerate(labels)}
+
+        def _bbox_from_points(points):
+            xs = [p[0] for p in points]
+            ys = [p[1] for p in points]
+            return min(xs), min(ys), max(xs), max(ys)
+
+        converted = 0
+        skipped = 0
+
+        for jf in json_files:
+            try:
+                data = json.loads(jf.read_text(encoding="utf-8"))
+            except Exception:
+                data = json.loads(jf.read_text(encoding="utf-8", errors="ignore"))
+
+            img_w = data.get("imageWidth")
+            img_h = data.get("imageHeight")
+            if not img_w or not img_h:
+                skipped += 1
+                continue
+
+            yolo_lines = []
+            for shp in data.get("shapes", []):
+                lab = shp.get("label", "")
+                if lab not in label_to_id:
+                    continue
+                pts = shp.get("points", [])
+                if not pts or len(pts) < 2:
+                    continue
+
+                # Labelme may store rectangle as 2 points or polygon with many points
+                x1, y1, x2, y2 = _bbox_from_points(pts)
+
+                # Clamp to image bounds
+                x1 = max(0.0, min(float(img_w), float(x1)))
+                x2 = max(0.0, min(float(img_w), float(x2)))
+                y1 = max(0.0, min(float(img_h), float(y1)))
+                y2 = max(0.0, min(float(img_h), float(y2)))
+
+                bw = abs(x2 - x1)
+                bh = abs(y2 - y1)
+                if bw <= 1e-6 or bh <= 1e-6:
+                    continue
+
+                xc = (x1 + x2) / 2.0
+                yc = (y1 + y2) / 2.0
+
+                # Normalize
+                xc_n = xc / float(img_w)
+                yc_n = yc / float(img_h)
+                bw_n = bw / float(img_w)
+                bh_n = bh / float(img_h)
+
+                cls_id = label_to_id[lab]
+                yolo_lines.append(f"{cls_id} {xc_n:.6f} {yc_n:.6f} {bw_n:.6f} {bh_n:.6f}")
+
+            # Use json basename for .txt (this matches your Compose dataset pairing logic)
+            out_txt = jf.with_suffix(".txt")
+            out_txt.write_text("\n".join(yolo_lines) + ("\n" if yolo_lines else ""), encoding="utf-8")
+            converted += 1
+
+        self.dialog_box(
+            f"Convert to YOLOv5 completed.\n"
+            f"- JSON files: {len(json_files)}\n"
+            f"- Converted: {converted}\n"
+            f"- Skipped (missing image size): {skipped}\n"
+            f"Output: .txt + classes.txt in the same folder."
+        )
+        return True
     
     def do_composedset(self):
         self.folder_path = QFileDialog.getExistingDirectory(self,"Select Folder")
+        
+        if not self.folder_path:
+            self.dialog_box("Dataset composition cancelled.")
+            return
+
         destination_folder = os.path.join(self.folder_path, "raw_data")
 
         if not os.path.exists(destination_folder):
@@ -1365,10 +1469,93 @@ class MainWindow(QMainWindow, Ui_MainWindow, Labelme2YOLO):
         else:
             print("Cannot find:", file_clas)
 
+    def do_video2img(self):
+        video_path, _ = QFileDialog.getOpenFileName(
+            self,
+            "Select Video File",
+            "",
+            "Video Files (*.mp4 *.avi *.mov *.mkv *.flv *.wmv);;All Files (*)"
+        )
+
+        if not video_path:
+            return
+
+        video_dir = os.path.dirname(video_path)
+        video_name = os.path.splitext(os.path.basename(video_path))[0]
+        output_folder = os.path.join(video_dir, video_name)
+
+        if os.path.exists(output_folder):
+            reply = QMessageBox.question(
+                self,
+                "Folder already exists",
+                f"The folder already exists:\n{output_folder}\n\nCreate a new folder?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.Yes
+            )
+            if reply == QMessageBox.No:
+                return
+
+            idx = 1
+            while True:
+                new_output_folder = os.path.join(video_dir, f"{video_name}_{idx}")
+                if not os.path.exists(new_output_folder):
+                    output_folder = new_output_folder
+                    break
+                idx += 1
+
+        os.makedirs(output_folder, exist_ok=True)
+
+        cap = cv2.VideoCapture(video_path)
+        if not cap.isOpened():
+            QMessageBox.warning(self, "Warning", "Cannot open the selected video file.")
+            return
+
+        total_frames = int(cap.get(cv2.CAP_PROP_FRAME_COUNT))
+        if total_frames <= 0:
+            total_frames = 0
+
+        progress = QProgressDialog("Converting video to images...", None, 0, max(total_frames, 1), self)
+        progress.setWindowTitle("Processing")
+        progress.setWindowModality(Qt.WindowModal)
+        progress.setCancelButton(None)
+        progress.setMinimumDuration(0)
+        progress.setValue(0)
+        progress.show()
+        QApplication.processEvents()
+
+        count = 0
+        while True:
+            ret, frame = cap.read()
+            if not ret:
+                break
+
+            filename = os.path.join(output_folder, f"{video_name}_{count:04d}.jpg")
+            cv2.imwrite(filename, frame)
+            count += 1
+
+            if total_frames > 0:
+                progress.setLabelText(f"Converting video to images...\n{count} / {total_frames} frames saved.")
+                progress.setValue(count)
+            else:
+                progress.setLabelText(f"Converting video to images...\n{count} frames saved.")
+                progress.setValue(0)
+
+            QApplication.processEvents()
+
+        cap.release()
+
+        progress.setValue(max(total_frames, 1))
+        progress.close()
+        QApplication.processEvents()
+
+        QMessageBox.information(
+            self,
+            "Done",
+            f"Saved {count} images to:\n{output_folder}"
+        )
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
     ex = MainWindow()
     ex.show()
     sys.exit(app.exec_())
-
