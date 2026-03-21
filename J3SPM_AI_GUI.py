@@ -11,13 +11,16 @@ from PyQt5 import QtCore, QtGui, QtWidgets
 class Ui_MainWindow(object):
     def setupUi(self, MainWindow):
         MainWindow.setObjectName("MainWindow")
-        MainWindow.setFixedSize(656, 516)
+        MainWindow.resize(900, 650)
+        MainWindow.setMinimumSize(700, 500)
         self.centralwidget = QtWidgets.QWidget(MainWindow)
         self.centralwidget.setObjectName("centralwidget")
         self.tabWidget = QtWidgets.QTabWidget(self.centralwidget)
         self.tabWidget.setEnabled(True)
-        self.tabWidget.setGeometry(QtCore.QRect(0, 0, 651, 491))
         self.tabWidget.setObjectName("tabWidget")
+        self.mainLayout = QtWidgets.QVBoxLayout(self.centralwidget)
+        self.mainLayout.setContentsMargins(0, 0, 0, 0)
+        self.mainLayout.addWidget(self.tabWidget)
         self.tab = QtWidgets.QWidget()
         self.tab.setObjectName("tab")
         self.tab_3 = QtWidgets.QWidget()
@@ -61,7 +64,7 @@ class Ui_MainWindow(object):
         self.tBR_Dataset = QtWidgets.QTextBrowser(self.tab_3)
         self.tBR_Dataset.setGeometry(QtCore.QRect(240, 200, 381, 261))
         self.tBR_Dataset.setObjectName("tBR_Dataset")
-        self.tBR_Dataset.setText("Dataset information")
+        self.tBR_Dataset.setText("")
         self.label_33 = QtWidgets.QLabel(self.tab_3)
         self.label_33.setGeometry(QtCore.QRect(20, 290, 56, 12))
         self.label_33.setObjectName("label_33")
@@ -98,13 +101,219 @@ class Ui_MainWindow(object):
         self.tBR_Imageinfo = QtWidgets.QTextBrowser(self.tab_3)
         self.tBR_Imageinfo.setGeometry(QtCore.QRect(260, 10, 201, 141))
         self.tBR_Imageinfo.setObjectName("tBR_Imageinfo")
-        self.tBR_Imageinfo.setText("Scanned Image information")
+        self.tBR_Imageinfo.setText("")
         self.pB_Labelme = QtWidgets.QPushButton(self.tab_3)
         self.pB_Labelme.setGeometry(QtCore.QRect(20, 350, 109, 41))
         self.pB_Labelme.setObjectName("pB_Labelme")
         self.pB_Labelme2yolo = QtWidgets.QPushButton(self.tab_3)
         self.pB_Labelme2yolo.setGeometry(QtCore.QRect(20, 400, 109, 31))
         self.pB_Labelme2yolo.setObjectName("pB_Labelme2yolo")
+        self.pB_VideoToImages = QtWidgets.QPushButton(self.tab_3)
+        self.pB_VideoToImages.setGeometry(QtCore.QRect(20, 450, 109, 31))
+        self.pB_VideoToImages.setObjectName("pB_VideoToImages")
+
+        # --- Responsive layout for 'Preparation' tab (tab_3) ---
+        # 목표(사용자 요청 반영):
+        #  - SPM IMG: Post-processing: [View Image | Gwyddion] (1행 2열)
+        #  - AI Pre-processing 내부에 3개 묶음:
+        #      * LabelImg: [Edit Classes | LabelImg] (1행 2열)
+        #      * Label me: [Label me | Convert to yolov5] (1행 2열)
+        #      * Compose dataset: 버튼 1줄 + Train/Validation/Test 1줄(한 줄에 모두)
+        #  - 우측 정보창은 Image info(위) / Dataset info(아래)로 유지
+
+        # Root layout on tab_3
+        self._tab3_root_v = QtWidgets.QVBoxLayout(self.tab_3)
+        self._tab3_root_v.setContentsMargins(10, 10, 10, 10)
+        self._tab3_root_v.setSpacing(8)
+
+        # Hide legacy absolute-position headings/lines (we use group boxes instead)
+        for _w in (self.label_31, self.label_32, self.line_4):
+            _w.setVisible(False)
+
+        # Top row: logo aligned to the right
+        self._tab3_logo_row = QtWidgets.QHBoxLayout()
+        self._tab3_logo_row.setContentsMargins(0, 0, 0, 0)
+        self._tab3_logo_row.addStretch(1)
+        self.label_21.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+        self._tab3_logo_row.addWidget(self.label_21, 0, QtCore.Qt.AlignRight | QtCore.Qt.AlignTop)
+        self._tab3_root_v.addLayout(self._tab3_logo_row)
+
+        # Main horizontal splitter (left controls / right info)
+        self._tab3_hsplit = QtWidgets.QSplitter(QtCore.Qt.Horizontal, self.tab_3)
+        self._tab3_hsplit.setChildrenCollapsible(False)
+        self._tab3_root_v.addWidget(self._tab3_hsplit, 1)
+
+        # ----------------------
+        # Left: controls (grouped)
+        # ----------------------
+        self._tab3_left = QtWidgets.QWidget(self.tab_3)
+        self._tab3_left_v = QtWidgets.QVBoxLayout(self._tab3_left)
+        self._tab3_left_v.setContentsMargins(0, 0, 0, 0)
+        self._tab3_left_v.setSpacing(10)
+
+        # Group 1: Post-processing
+        self.gb_post = QtWidgets.QGroupBox("SPM IMG: Post-processing", self._tab3_left)
+        self._tab3_title_font_bold = QtGui.QFont()
+        self._tab3_title_font_bold.setBold(True)
+        self._tab3_title_font_normal = QtGui.QFont()
+        self._tab3_title_font_normal.setBold(False)
+        self.gb_post.setFont(self._tab3_title_font_bold)
+        self.gb_post_v = QtWidgets.QVBoxLayout(self.gb_post)
+        self.gb_post_v.setContentsMargins(10, 10, 10, 10)
+        self.gb_post_v.setSpacing(6)
+
+        self.gb_post_grid = QtWidgets.QGridLayout()
+        self.gb_post_grid.setHorizontalSpacing(8)
+        self.gb_post_grid.setVerticalSpacing(6)
+        self.gb_post_grid.addWidget(self.pB_Opentopo, 0, 0)
+        self.gb_post_grid.addWidget(self.pB_Gwyddion, 0, 1)
+        self.pB_Opentopo.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.pB_Gwyddion.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.gb_post_v.addLayout(self.gb_post_grid)
+
+        # Topography file name (keep as info line under buttons)
+        self.lB_Toponame.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.gb_post_v.addWidget(self.lB_Toponame)
+        self.pB_Opentopo.setFont(self._tab3_title_font_normal)
+        self.pB_Gwyddion.setFont(self._tab3_title_font_normal)
+        self.lB_Toponame.setFont(self._tab3_title_font_normal)
+
+        self._tab3_left_v.addWidget(self.gb_post)
+
+        # Group 2: AI Pre-processing (contains 3 sub-groups)
+        self.gb_ai = QtWidgets.QGroupBox("AI Pre-processing", self._tab3_left)
+        self.gb_ai.setFont(self._tab3_title_font_bold)
+        self.gb_ai_v = QtWidgets.QVBoxLayout(self.gb_ai)
+        self.gb_ai_v.setContentsMargins(10, 10, 10, 10)
+        self.gb_ai_v.setSpacing(10)
+
+        # Sub-group: LabelImg
+        self.gb_labelimg = QtWidgets.QGroupBox("LabelImg", self.gb_ai)
+        self.gb_labelimg_grid = QtWidgets.QGridLayout(self.gb_labelimg)
+        self.gb_labelimg_grid.setContentsMargins(10, 10, 10, 10)
+        self.gb_labelimg_grid.setHorizontalSpacing(8)
+        self.gb_labelimg_grid.setVerticalSpacing(6)
+        self.gb_labelimg_grid.addWidget(self.pB_Editclass, 0, 0)
+        self.gb_labelimg_grid.addWidget(self.pB_Labelstudio, 0, 1)
+        self.pB_Editclass.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.pB_Labelstudio.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.gb_ai_v.addWidget(self.gb_labelimg)
+
+        # Sub-group: Label me
+        self.gb_labelme = QtWidgets.QGroupBox("Label me", self.gb_ai)
+        self.gb_labelme_grid = QtWidgets.QGridLayout(self.gb_labelme)
+        self.gb_labelme_grid.setContentsMargins(10, 10, 10, 10)
+        self.gb_labelme_grid.setHorizontalSpacing(8)
+        self.gb_labelme_grid.setVerticalSpacing(6)
+        self.gb_labelme_grid.addWidget(self.pB_Labelme, 0, 0)
+        self.gb_labelme_grid.addWidget(self.pB_Labelme2yolo, 0, 1)
+        self.pB_Labelme.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.pB_Labelme2yolo.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.gb_ai_v.addWidget(self.gb_labelme)
+
+        # Sub-group: Compose dataset
+        self.gb_compose = QtWidgets.QGroupBox("Compose dataset", self.gb_ai)
+        self.gb_compose_v = QtWidgets.QVBoxLayout(self.gb_compose)
+        self.gb_compose_v.setContentsMargins(10, 10, 10, 10)
+        self.gb_compose_v.setSpacing(8)
+
+        self.pB_Composedset.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.gb_compose_v.addWidget(self.pB_Composedset)
+
+        # Train/Validation/Test in a single row
+        self._rates_row = QtWidgets.QHBoxLayout()
+        self._rates_row.setSpacing(8)
+
+        # Reuse existing labels so retranslateUi texts are kept
+        for _lab in (self.label_33, self.label_34, self.label_35):
+            _lab.setSizePolicy(QtWidgets.QSizePolicy.Fixed, QtWidgets.QSizePolicy.Fixed)
+
+        for _le in (self.lE_TrainR, self.lE_ValidR, self.lE_TestR):
+            _le.setFixedWidth(50)
+
+        self._rates_row.addWidget(self.label_33)
+        self._rates_row.addWidget(self.lE_TrainR)
+        self._rates_row.addSpacing(8)
+        self._rates_row.addWidget(self.label_34)
+        self._rates_row.addWidget(self.lE_ValidR)
+        self._rates_row.addSpacing(8)
+        self._rates_row.addWidget(self.label_35)
+        self._rates_row.addWidget(self.lE_TestR)
+        self._rates_row.addStretch(1)
+
+        self.gb_compose_v.addLayout(self._rates_row)
+        self.gb_ai_v.addWidget(self.gb_compose)
+        self.gb_labelimg.setFont(self._tab3_title_font_normal)
+        self.gb_labelme.setFont(self._tab3_title_font_normal)
+        self.gb_compose.setFont(self._tab3_title_font_normal)
+        for _w in (self.pB_Editclass, self.pB_Labelstudio, self.pB_Labelme, self.pB_Labelme2yolo,
+                   self.pB_Composedset, self.label_33, self.label_34, self.label_35,
+                   self.lE_TrainR, self.lE_ValidR, self.lE_TestR):
+            _w.setFont(self._tab3_title_font_normal)
+
+        self._tab3_left_v.addWidget(self.gb_ai)
+
+        # Group 3: Video Pre-processing
+        self.gb_video = QtWidgets.QGroupBox("Video Pre-processing", self._tab3_left)
+        self.gb_video.setFont(self._tab3_title_font_bold)
+        self.gb_video_v = QtWidgets.QVBoxLayout(self.gb_video)
+        self.gb_video_v.setContentsMargins(10, 10, 10, 10)
+        self.gb_video_v.setSpacing(6)
+
+        self.gb_video_grid = QtWidgets.QGridLayout()
+        self.gb_video_grid.setHorizontalSpacing(8)
+        self.gb_video_grid.setVerticalSpacing(6)
+        self.gb_video_grid.setColumnStretch(0, 1)
+        self.gb_video_grid.setColumnStretch(1, 1)
+        self.gb_video_grid.addWidget(self.pB_VideoToImages, 0, 0)
+        self.pB_VideoToImages.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self.pB_VideoToImages.setMinimumHeight(self.pB_Opentopo.minimumSizeHint().height())
+        self.gb_video_v.addLayout(self.gb_video_grid)
+
+        # Add some vertical gap before the Video Pre-processing section
+        self._tab3_video_spacer = QtWidgets.QSpacerItem(20, 15, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed)
+        self._tab3_left_v.addItem(self._tab3_video_spacer)
+        self.pB_VideoToImages.setFont(self._tab3_title_font_normal)
+        self._tab3_left_v.addWidget(self.gb_video)
+
+
+        # Push everything up
+        self._tab3_left_v.addStretch(1)
+
+        self._tab3_hsplit.addWidget(self._tab3_left)
+
+        # ----------------------
+        # Right: info split (Image / Dataset)
+        # ----------------------
+        self._tab3_right = QtWidgets.QWidget(self.tab_3)
+        self._tab3_right_v = QtWidgets.QVBoxLayout(self._tab3_right)
+        self._tab3_right_v.setContentsMargins(0, 0, 0, 0)
+        self._tab3_right_v.setSpacing(8)
+
+        self.gb_imginfo = QtWidgets.QGroupBox("Scanned Image information", self._tab3_right)
+        self.gb_imginfo_v = QtWidgets.QVBoxLayout(self.gb_imginfo)
+        self.gb_imginfo_v.setContentsMargins(8, 8, 8, 8)
+        self.gb_imginfo_v.addWidget(self.tBR_Imageinfo)
+
+        self.gb_datasetinfo = QtWidgets.QGroupBox("Dataset information", self._tab3_right)
+        self.gb_datasetinfo_v = QtWidgets.QVBoxLayout(self.gb_datasetinfo)
+        self.gb_datasetinfo_v.setContentsMargins(8, 8, 8, 8)
+        self.gb_datasetinfo_v.addWidget(self.tBR_Dataset)
+
+        self._tab3_vsplit = QtWidgets.QSplitter(QtCore.Qt.Vertical, self._tab3_right)
+        self._tab3_vsplit.setChildrenCollapsible(False)
+        self._tab3_vsplit.addWidget(self.gb_imginfo)
+        self._tab3_vsplit.addWidget(self.gb_datasetinfo)
+        self._tab3_vsplit.setStretchFactor(0, 1)
+        self._tab3_vsplit.setStretchFactor(1, 2)
+
+        self._tab3_right_v.addWidget(self._tab3_vsplit, 1)
+
+        self._tab3_hsplit.addWidget(self._tab3_right)
+
+        # Initial left/right ratio
+        self._tab3_hsplit.setStretchFactor(0, 0)
+        self._tab3_hsplit.setStretchFactor(1, 1)
 
         self.tabWidget.addTab(self.tab_3, "")
         
@@ -126,7 +335,7 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.label_26, 2, 2, 1, 1)
         self.label_25 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_25.setObjectName("label_25")
-        self.gridLayout_6.addWidget(self.label_25, 2, 0, 1, 1)
+        self.gridLayout_6.addWidget(self.label_25, 2, 0, 1, 2)
         self.lE_Model = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.lE_Model.setObjectName("lE_Model")
         self.gridLayout_6.addWidget(self.lE_Model, 5, 3, 1, 1)
@@ -136,16 +345,28 @@ class Ui_MainWindow(object):
         self.label_24 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_24.setObjectName("label_24")
         self.gridLayout_6.addWidget(self.label_24, 0, 3, 1, 1)
-        self.lB_Hyper = QtWidgets.QLabel(self.gridLayoutWidget)
+        # Hyper parameter path display: same behavior as Data path row
+        self.lB_Hyper = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.lB_Hyper.setObjectName("lB_Hyper")
-        self.lB_Hyper.setFixedSize(100,20)
-        self.lB_Hyper.setAlignment(QtCore.Qt.AlignRight)
-        self.gridLayout_6.addWidget(self.lB_Hyper, 5, 0, 1, 1)
-        self.lB_DYaml = QtWidgets.QLabel(self.gridLayoutWidget)
+        self.lB_Hyper.setReadOnly(True)
+        self.lB_Hyper.setStyleSheet("background-color: white; border: 1px solid #B0B0B0; padding: 2px 6px;")
+        self.lB_Hyper.setMinimumHeight(24)
+        self.lB_Hyper.setMinimumWidth(180)
+        self.lB_Hyper.setMaximumWidth(520)
+        self.lB_Hyper.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        self.lB_Hyper.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.lB_Hyper.setCursorPosition(0)
+        # Data path display: user-resizable width with a maximum limit
+        self.lB_DYaml = QtWidgets.QLineEdit(self.gridLayoutWidget)
         self.lB_DYaml.setObjectName("lB_DYaml")
-        self.lB_DYaml.setFixedSize(100,20)
-        self.lB_DYaml.setAlignment(QtCore.Qt.AlignRight)
-        self.gridLayout_6.addWidget(self.lB_DYaml, 3, 0, 1, 1)
+        self.lB_DYaml.setReadOnly(True)
+        self.lB_DYaml.setStyleSheet("background-color: white; border: 1px solid #B0B0B0; padding: 2px 6px;")
+        self.lB_DYaml.setMinimumHeight(24)
+        self.lB_DYaml.setMinimumWidth(180)
+        self.lB_DYaml.setMaximumWidth(520)
+        self.lB_DYaml.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        self.lB_DYaml.setAlignment(QtCore.Qt.AlignLeft | QtCore.Qt.AlignVCenter)
+        self.lB_DYaml.setCursorPosition(0)
         self.cB_Cache = QtWidgets.QCheckBox(self.gridLayoutWidget)
         self.cB_Cache.setObjectName("cB_Cache")
         self.cB_Cache.setChecked(True)
@@ -158,7 +379,7 @@ class Ui_MainWindow(object):
         self.sB_Batch.setObjectName("sB_Batch")
         self.sB_Batch.setMinimum(-1) 
         self.sB_Batch.setMaximum(500)
-        self.sB_Batch.setValue(2)
+        self.sB_Batch.setValue(-1)
         self.gridLayout_6.addWidget(self.sB_Batch, 1, 2, 1, 1)
         self.label_28 = QtWidgets.QLabel(self.gridLayoutWidget)
         self.label_28.setObjectName("label_28")
@@ -191,14 +412,49 @@ class Ui_MainWindow(object):
         self.gridLayout_6.addWidget(self.sB_IPixes, 1, 0, 1, 1)
         self.pB_DYaml = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.pB_DYaml.setObjectName("pB_DYaml")
-        self.gridLayout_6.addWidget(self.pB_DYaml, 2, 1, 1, 1)
+        self.pB_DYaml.setMinimumWidth(70)
+        self.pB_DYaml.setMaximumWidth(90)
+
+        # Splitter for the Data row: the user can drag the divider,
+        # and the path editor itself will never grow beyond its maximum width.
+        self.dataYamlRow = QtWidgets.QSplitter(QtCore.Qt.Horizontal, self.gridLayoutWidget)
+        self.dataYamlRow.setObjectName("dataYamlRow")
+        self.dataYamlRow.setChildrenCollapsible(False)
+        self.dataYamlRow.setHandleWidth(6)
+        self.dataYamlRow.setMinimumWidth(260)
+        self.dataYamlRow.setMaximumWidth(620)
+        self.dataYamlRow.addWidget(self.lB_DYaml)
+        self.dataYamlRow.addWidget(self.pB_DYaml)
+        self.dataYamlRow.setStretchFactor(0, 1)
+        self.dataYamlRow.setStretchFactor(1, 0)
+        self.dataYamlRow.setSizes([480, 80])
+        self.gridLayout_6.addWidget(self.dataYamlRow, 3, 0, 1, 2)
 
         self.pB_Hyper = QtWidgets.QPushButton(self.gridLayoutWidget)
         self.pB_Hyper.setObjectName("pB_Hpyer")
-        self.gridLayout_6.addWidget(self.pB_Hyper, 4, 1, 1, 1)
+        self.pB_Hyper.setMinimumWidth(70)
+        self.pB_Hyper.setMaximumWidth(90)
+
+        # Splitter for the Hyper parameter row: same layout as the Data row.
+        self.hyperRow = QtWidgets.QSplitter(QtCore.Qt.Horizontal, self.gridLayoutWidget)
+        self.hyperRow.setObjectName("hyperRow")
+        self.hyperRow.setChildrenCollapsible(False)
+        self.hyperRow.setHandleWidth(6)
+        self.hyperRow.setMinimumWidth(260)
+        self.hyperRow.setMaximumWidth(620)
+        self.hyperRow.addWidget(self.lB_Hyper)
+        self.hyperRow.addWidget(self.pB_Hyper)
+        self.hyperRow.setStretchFactor(0, 1)
+        self.hyperRow.setStretchFactor(1, 0)
+        self.hyperRow.setSizes([480, 80])
+        self.gridLayout_6.addWidget(self.hyperRow, 5, 0, 1, 2)
         self.pB_Train = QtWidgets.QPushButton(self.tab_4)
         self.pB_Train.setGeometry(QtCore.QRect(10, 30, 109, 41))
         self.pB_Train.setObjectName("pB_Train")
+
+        # Google Colab button (responsive: placed in action bar layout)
+        self.pB_coLab = QtWidgets.QPushButton(self.tab_4)
+        self.pB_coLab.setObjectName("pB_coLab")
         self.tBR_Train = QtWidgets.QTextBrowser(self.tab_4)
         self.tBR_Train.setGeometry(QtCore.QRect(10, 190, 625, 265))
         self.tBR_Train.setObjectName("tBR_Train")
@@ -229,6 +485,133 @@ class Ui_MainWindow(object):
         self.comboBox_3.setObjectName("comboBox_3")
         self.comboBox_3.addItem("")
         self.comboBox_3.addItem("")
+        # --- Clean GroupBox layout for 'Training' tab (tab_4) ---
+        # Root layout
+        self._tab4_root_v = QtWidgets.QVBoxLayout(self.tab_4)
+        self._tab4_root_v.setContentsMargins(10, 10, 10, 10)
+        self._tab4_root_v.setSpacing(8)
+
+        # Action bar: Train button (left)
+        self._tab4_actions = QtWidgets.QHBoxLayout()
+        self._tab4_actions.setSpacing(6)
+        self._tab4_actions.addWidget(self.pB_Train)
+        self._tab4_actions.addStretch(1)
+        self._tab4_actions.addWidget(self.pB_coLab)
+        self._tab4_root_v.addLayout(self._tab4_actions)
+
+        # Splitter: (top controls) / (log)
+        self._tab4_split_v = QtWidgets.QSplitter(QtCore.Qt.Vertical, self.tab_4)
+        self._tab4_root_v.addWidget(self._tab4_split_v)
+
+        # --- Top controls area ---
+        self._tab4_top = QtWidgets.QWidget(self.tab_4)
+        self._tab4_top_h = QtWidgets.QHBoxLayout(self._tab4_top)
+        self._tab4_top_h.setContentsMargins(0, 0, 0, 0)
+        self._tab4_top_h.setSpacing(10)
+
+        # Left: quick options
+        self._tab4_gb_quick = QtWidgets.QGroupBox(self._tab4_top)
+        self._tab4_gb_quick.setTitle("Quick Options")
+        self._tab4_gb_quick_v = QtWidgets.QVBoxLayout(self._tab4_gb_quick)
+        self._tab4_gb_quick_v.setContentsMargins(10, 10, 10, 10)
+        self._tab4_gb_quick_v.setSpacing(8)
+
+        self._tab4_quick_grid = QtWidgets.QGridLayout()
+        self._tab4_quick_grid.setHorizontalSpacing(8)
+        self._tab4_quick_grid.setVerticalSpacing(6)
+
+        # Row 0/1: Action + Configure (use existing labels/combos)
+        self._tab4_quick_grid.addWidget(self.label_39, 0, 0)
+        self._tab4_quick_grid.addWidget(self.label_37, 0, 1)
+        self._tab4_quick_grid.addWidget(self.comboBox_3, 1, 0)
+        self._tab4_quick_grid.addWidget(self.comboBox_2, 1, 1)
+
+        # Row 2/3: Additional options
+        self._tab4_quick_grid.addWidget(self.label_38, 2, 0, 1, 2)
+        # Additional options: use a wrapping editor for display/input, while keeping lineEdit_3 for compatibility
+        self.lineEdit_3.setVisible(False)
+
+        self._tab4_addopts = QtWidgets.QPlainTextEdit(self._tab4_gb_quick)
+        self._tab4_addopts.setObjectName("_tab4_addopts")
+        self._tab4_addopts.setTabChangesFocus(True)
+        self._tab4_addopts.setPlaceholderText("")
+        self._tab4_addopts.setWordWrapMode(QtGui.QTextOption.WrapAtWordBoundaryOrAnywhere)
+        self._tab4_addopts.setMinimumHeight(55)
+        self._tab4_addopts.setMaximumHeight(75)
+        self._tab4_addopts.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self._tab4_addopts.setStyleSheet("background-color: white; border: 1px solid #B0B0B0; padding: 4px;")
+
+        # Put the wrapping editor into the grid
+        self._tab4_quick_grid.addWidget(self._tab4_addopts, 3, 0, 1, 2)
+        self._tab4_quick_grid.setRowStretch(3, 0)
+
+        # Sync: keep the underlying command as a single line in lineEdit_3
+        def _tab4_sync_addopts_to_lineedit():
+            txt = self._tab4_addopts.toPlainText().replace("\n", " ")
+            if self.lineEdit_3.text() != txt:
+                self.lineEdit_3.blockSignals(True)
+                self.lineEdit_3.setText(txt)
+                self.lineEdit_3.blockSignals(False)
+
+        def _tab4_sync_lineedit_to_addopts(txt):
+            if self._tab4_addopts.toPlainText() != txt:
+                self._tab4_addopts.blockSignals(True)
+                self._tab4_addopts.setPlainText(txt)
+                self._tab4_addopts.blockSignals(False)
+
+        self._tab4_addopts.textChanged.connect(_tab4_sync_addopts_to_lineedit)
+        self.lineEdit_3.textChanged.connect(_tab4_sync_lineedit_to_addopts)
+
+        # Initialize display from existing value
+        _tab4_sync_lineedit_to_addopts(self.lineEdit_3.text())
+
+
+        self._tab4_gb_quick_v.addLayout(self._tab4_quick_grid)
+        self._tab4_gb_quick_v.addStretch(1)
+
+        # Right: full training setup grid (existing gridLayoutWidget)
+        self._tab4_gb_setup = QtWidgets.QGroupBox(self._tab4_top)
+        self._tab4_gb_setup.setTitle("Training Setup")
+        self._tab4_gb_setup_v = QtWidgets.QVBoxLayout(self._tab4_gb_setup)
+        self._tab4_gb_setup_v.setContentsMargins(10, 10, 10, 10)
+        self._tab4_gb_setup_v.setSpacing(6)
+
+        # Reuse existing gridLayoutWidget content
+        self.gridLayoutWidget.setParent(self._tab4_gb_setup)
+        self.gridLayoutWidget.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Fixed)
+        self._tab4_gb_setup_v.addWidget(self.gridLayoutWidget)
+
+        # Keep the Training Setup area responsive, but prevent the Data path row
+        # from making the whole panel excessively wide.
+        self.gridLayout_6.setColumnStretch(0, 1)
+        self.gridLayout_6.setColumnStretch(1, 0)
+        self.gridLayout_6.setColumnStretch(2, 0)
+        self.gridLayout_6.setColumnStretch(3, 0)
+
+        # Assemble top area
+        self._tab4_top_h.addWidget(self._tab4_gb_quick, 0)
+        self._tab4_top_h.addWidget(self._tab4_gb_setup, 1)
+
+        # --- Log area ---
+        self._tab4_gb_log = QtWidgets.QGroupBox(self.tab_4)
+        self._tab4_gb_log.setTitle("Log")
+        self._tab4_gb_log_v = QtWidgets.QVBoxLayout(self._tab4_gb_log)
+        self._tab4_gb_log_v.setContentsMargins(10, 10, 10, 10)
+        self._tab4_gb_log_v.setSpacing(6)
+
+        self.tBR_Train.setParent(self._tab4_gb_log)
+        self.tBR_Train.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        # Ensure non-transparent editor look
+        self.tBR_Train.setStyleSheet("QTextBrowser { background-color: white; border: 1px solid #B0B0B0; }")
+        self._tab4_gb_log_v.addWidget(self.tBR_Train)
+
+        # Put into splitter
+        self._tab4_split_v.addWidget(self._tab4_top)
+        self._tab4_split_v.addWidget(self._tab4_gb_log)
+        self._tab4_split_v.setStretchFactor(0, 0)
+        self._tab4_split_v.setStretchFactor(1, 1)
+        # ---------------------------------------------------------
+
 
 
         self.tabWidget.addTab(self.tab_4, "")
@@ -275,9 +658,6 @@ class Ui_MainWindow(object):
         self.comboBox_4.setObjectName("comboBox_4")
         self.comboBox_4.addItem("")
         self.comboBox_4.addItem("")
-        self.pB_coLab = QtWidgets.QPushButton(self.tab_4)
-        self.pB_coLab.setGeometry(QtCore.QRect(550, 30, 91, 41))
-        self.pB_coLab.setObjectName("pB_coLab")
         self.label_61 = QtWidgets.QLabel(self.tab_5)
         self.label_61.setGeometry(QtCore.QRect(110, 170, 41, 16))
         self.label_61.setObjectName("label_61")
@@ -406,6 +786,194 @@ class Ui_MainWindow(object):
         self.pB_SerDiscon.setGeometry(QtCore.QRect(560, 351, 71, 31))
         self.pB_SerDiscon.setObjectName("pB_SerDiscon")
         self.pB_SerDiscon.setEnabled(False)
+
+        
+                # --- Responsive/compact layout for 'Inference' tab (tab_5) ---
+        # 목표(요청하신 스타일):
+        #   1) 좌측 컨트롤을 3개의 GroupBox로 구분
+        #      - Data/Model/Inference, Search, Zoom/Scan/Connection
+        #   2) 우측 결과창은 Vertical splitter로 배치하고 Result1 높이를 조금 더 키움
+        #   3) 창 크기 변경 시 우측 결과 영역이 주로 확장되도록 설정
+
+        # Root (tab_5)
+        self._tab5_root_h = QtWidgets.QHBoxLayout(self.tab_5)
+        self._tab5_root_h.setContentsMargins(10, 10, 10, 10)
+        self._tab5_root_h.setSpacing(10)
+
+        self._tab5_split_h = QtWidgets.QSplitter(QtCore.Qt.Horizontal, self.tab_5)
+        self._tab5_root_h.addWidget(self._tab5_split_h)
+
+        # ---------------- Left: grouped control panel ----------------
+        self._tab5_left = QtWidgets.QWidget(self.tab_5)
+        self._tab5_left.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+
+        self._tab5_left_v = QtWidgets.QVBoxLayout(self._tab5_left)
+        self._tab5_left_v.setContentsMargins(0, 0, 0, 0)
+        self._tab5_left_v.setSpacing(8)
+
+        # --- Group 1: Data/Model/Inference ---
+        self._tab5_gb_actions = QtWidgets.QGroupBox("Data / Model / Inference", self._tab5_left)
+        self._tab5_gb_actions.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        self._tab5_actions_grid = QtWidgets.QGridLayout(self._tab5_gb_actions)
+        self._tab5_actions_grid.setContentsMargins(8, 10, 8, 8)
+        self._tab5_actions_grid.setHorizontalSpacing(8)
+        self._tab5_actions_grid.setVerticalSpacing(6)
+        self._tab5_actions_grid.setColumnStretch(0, 0)
+        self._tab5_actions_grid.setColumnStretch(1, 0)
+        self._tab5_actions_grid.setColumnStretch(2, 1)
+        self._tab5_actions_grid.setColumnStretch(3, 0)
+        self._tab5_actions_grid.setColumnStretch(4, 0)
+
+        # Row 0: Open data + selected image
+        self._tab5_actions_grid.addWidget(self.pB_Openimage, 0, 0, 1, 1)
+        self._tab5_actions_grid.addWidget(self.lB_imagname, 0, 1, 1, 4)
+
+        # Row 1: Model select + selected model
+        self._tab5_actions_grid.addWidget(self.pB_Mode_select, 1, 0, 1, 1)
+        self._tab5_actions_grid.addWidget(self.lB_modelname, 1, 1, 1, 4)
+
+        # Row 2: Inference + mode + save/load
+        self._tab5_actions_grid.addWidget(self.pB_Inference, 2, 0, 1, 1)
+        self._tab5_actions_grid.addWidget(self.comboBox_4, 2, 1, 1, 1)
+        self._tab5_actions_grid.addWidget(self.pB_Saveres, 2, 2, 1, 1)
+        self._tab5_actions_grid.addWidget(self.pB_Loadres, 2, 3, 1, 1)
+
+        self._tab5_left_v.addWidget(self._tab5_gb_actions)
+
+        # --- Group 2: Search ---
+        self._tab5_gb_search = QtWidgets.QGroupBox("Search", self._tab5_left)
+        self._tab5_gb_search.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Fixed)
+        self._tab5_search_grid = QtWidgets.QGridLayout(self._tab5_gb_search)
+        self._tab5_search_grid.setContentsMargins(8, 10, 8, 8)
+        self._tab5_search_grid.setHorizontalSpacing(8)
+        self._tab5_search_grid.setVerticalSpacing(6)
+
+        self._tab5_search_grid.setColumnStretch(0, 0)
+        self._tab5_search_grid.setColumnStretch(1, 0)
+        self._tab5_search_grid.setColumnStretch(2, 1)
+        self._tab5_search_grid.setColumnStretch(3, 0)
+        self._tab5_search_grid.setColumnStretch(4, 0)
+
+        self._tab5_search_grid.addWidget(self.pB_Search, 0, 0, 1, 1)
+        self._tab5_search_grid.addWidget(self.label_61, 0, 1, 1, 1)
+        self._tab5_search_grid.addWidget(self.lE_Class, 0, 2, 1, 1)
+        self._tab5_search_grid.addWidget(self.label_66, 0, 3, 1, 1)
+        self._tab5_search_grid.addWidget(self.lE_Confi, 0, 4, 1, 1)
+
+        self._tab5_left_v.addWidget(self._tab5_gb_search)
+
+        # --- Group 3: Zoom/Scan & Connection ---
+        self._tab5_gb_scan = QtWidgets.QGroupBox("Zoom / Scan / Connection", self._tab5_left)
+        self._tab5_gb_scan.setSizePolicy(QtWidgets.QSizePolicy.Preferred, QtWidgets.QSizePolicy.Expanding)
+        self._tab5_scan_grid = QtWidgets.QGridLayout(self._tab5_gb_scan)
+        self._tab5_scan_grid.setContentsMargins(8, 10, 8, 8)
+        self._tab5_scan_grid.setHorizontalSpacing(8)
+        self._tab5_scan_grid.setVerticalSpacing(6)
+
+        # Columns: 0(btn/label) | 1(label) | 2(field) | 3(label) | 4(field/checkbox)
+        self._tab5_scan_grid.setColumnStretch(0, 0)
+        self._tab5_scan_grid.setColumnStretch(1, 0)
+        self._tab5_scan_grid.setColumnStretch(2, 1)
+        self._tab5_scan_grid.setColumnStretch(3, 0)
+        self._tab5_scan_grid.setColumnStretch(4, 0)
+
+        # Row 0: Zoom scan + Index + All/Simul.
+        self._tab5_scan_grid.addWidget(self.pB_Zoomscan, 0, 0, 1, 1)
+        self._tab5_scan_grid.addWidget(self.label_68, 0, 1, 1, 1)
+        self._tab5_scan_grid.addWidget(self.sB_indexZ, 0, 2, 1, 1)
+        self._tab5_scan_grid.addWidget(self.cB_Allobj, 0, 3, 1, 1)
+        self._tab5_scan_grid.addWidget(self.cB_Sim, 0, 4, 1, 1)
+
+        # Row 1: Cancel scan + Found + Img.#
+        self._tab5_scan_grid.addWidget(self.pB_Zscanel, 1, 0, 1, 1)
+        self._tab5_scan_grid.addWidget(self.label_62, 1, 1, 1, 1)
+        self._tab5_scan_grid.addWidget(self.lB_ClassQu, 1, 2, 1, 1)
+        self._tab5_scan_grid.addWidget(self.label_63, 1, 3, 1, 1)
+        self._tab5_scan_grid.addWidget(self.lB_Currentob, 1, 4, 1, 1)
+
+        # Row 2-5: Zoom scan parameters (2x2)
+        self._tab5_zoom_grid = QtWidgets.QGridLayout()
+        self._tab5_zoom_grid.setHorizontalSpacing(8)
+        self._tab5_zoom_grid.setVerticalSpacing(6)
+        self._tab5_zoom_grid.addWidget(self.label_64, 0, 0)
+        self._tab5_zoom_grid.addWidget(self.label_69, 0, 1)
+        self._tab5_zoom_grid.addWidget(self.sB_ReXZ, 1, 0)
+        self._tab5_zoom_grid.addWidget(self.dSB_Xlength, 1, 1)
+        self._tab5_zoom_grid.addWidget(self.label_70, 2, 0)
+        self._tab5_zoom_grid.addWidget(self.label_65, 2, 1)
+        self._tab5_zoom_grid.addWidget(self.dSB_L2volt, 3, 0)
+        self._tab5_zoom_grid.addWidget(self.sB_LinesZ, 3, 1)
+
+        self._tab5_scan_grid.addLayout(self._tab5_zoom_grid, 2, 0, 4, 5)
+
+        # Spacer + Progress + Connection (moved progress above Ethernet)
+        self._tab5_scan_grid.addItem(
+            QtWidgets.QSpacerItem(20, 14, QtWidgets.QSizePolicy.Minimum, QtWidgets.QSizePolicy.Fixed),
+            6, 0, 1, 5
+        )
+
+        # Progress bar (above Ethernet)
+        self._tab5_scan_grid.addWidget(self.pBA_ProgFS, 7, 0, 1, 5)
+
+        # Row 8-9: Connection settings
+        self._tab5_conn_grid = QtWidgets.QGridLayout()
+        self._tab5_conn_grid.setHorizontalSpacing(8)
+        self._tab5_conn_grid.setVerticalSpacing(6)
+
+        # Ethernet row
+        self._tab5_conn_grid.addWidget(self.cB_Ethernet, 0, 0)
+        self._tab5_conn_grid.addWidget(self.label_72, 0, 1)
+        self._tab5_conn_grid.addWidget(self.lE_Host, 0, 2)
+        self._tab5_conn_grid.addWidget(self.label_71, 0, 3)
+        self._tab5_conn_grid.addWidget(self.lE_Port, 0, 4)
+
+        # Serial row
+        self._tab5_conn_grid.addWidget(self.cB_Serialout, 1, 0)
+        self._tab5_conn_grid.addWidget(self.portCombo, 1, 2)
+        self._tab5_conn_grid.addWidget(self.pB_SerConect, 1, 3)
+        self._tab5_conn_grid.addWidget(self.pB_SerDiscon, 1, 4)
+
+        self._tab5_scan_grid.addLayout(self._tab5_conn_grid, 8, 0, 2, 5)
+
+        # Stretch below
+        self._tab5_scan_grid.setRowStretch(10, 1)
+
+        self._tab5_left_v.addWidget(self._tab5_gb_scan)
+        self._tab5_left_v.addStretch(1)
+
+        # ---------------- Right: output panes ----------------
+        self._tab5_right = QtWidgets.QWidget(self.tab_5)
+        self._tab5_right_v = QtWidgets.QVBoxLayout(self._tab5_right)
+        self._tab5_right_v.setContentsMargins(0, 0, 0, 0)
+        self._tab5_right_v.setSpacing(0)
+
+        self._tab5_split_v = QtWidgets.QSplitter(QtCore.Qt.Vertical, self._tab5_right)
+        self._tab5_right_v.addWidget(self._tab5_split_v)
+
+        # Height tuning
+        self.tBR_Result1.setMinimumHeight(160)
+        self.tBR_Result2.setMinimumHeight(220)
+        self.tBR_Serialput.setMinimumHeight(90)
+
+        self.tBR_Result1.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.tBR_Result2.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+        self.tBR_Serialput.setSizePolicy(QtWidgets.QSizePolicy.Expanding, QtWidgets.QSizePolicy.Expanding)
+
+        self._tab5_split_v.addWidget(self.tBR_Result1)
+        self._tab5_split_v.addWidget(self.tBR_Result2)
+        self._tab5_split_v.addWidget(self.tBR_Serialput)
+
+        # Default ratios (user can drag splitter)
+        self._tab5_split_v.setStretchFactor(0, 2)
+        self._tab5_split_v.setStretchFactor(1, 6)
+        self._tab5_split_v.setStretchFactor(2, 1)
+
+        # Put panels into main splitter
+        self._tab5_split_h.addWidget(self._tab5_left)
+        self._tab5_split_h.addWidget(self._tab5_right)
+        self._tab5_split_h.setStretchFactor(0, 0)
+        self._tab5_split_h.setStretchFactor(1, 1)
+        # ---------------------------------------------------------
         self.tabWidget.addTab(self.tab_5, "")
 
 
@@ -531,6 +1099,75 @@ class Ui_MainWindow(object):
         self.cB_saveConf = QtWidgets.QCheckBox(self.tab_6)
         self.cB_saveConf.setGeometry(QtCore.QRect(500, 60, 81, 16))
         self.cB_saveConf.setObjectName("cB_saveConf")
+
+        # --- Responsive layout for 'Settings' tab (tab_6) ---
+        self._tab6_root_v = QtWidgets.QVBoxLayout(self.tab_6)
+        self._tab6_root_v.setContentsMargins(10, 10, 10, 10)
+        self._tab6_root_v.setSpacing(10)
+
+        self._tab6_root_v.addWidget(self.label_48)
+
+        # Save options
+        self._tab6_save_box = QtWidgets.QGroupBox(self.tab_6)
+        self._tab6_save_box.setTitle("Save / Output")
+        self._tab6_save_grid = QtWidgets.QGridLayout(self._tab6_save_box)
+        self._tab6_save_grid.addWidget(self.cB_viewImg, 0, 0)
+        self._tab6_save_grid.addWidget(self.cB_saveTxt, 0, 1)
+        self._tab6_save_grid.addWidget(self.cB_saveCsv, 0, 2)
+        self._tab6_save_grid.addWidget(self.cB_saveCrop, 0, 3)
+        self._tab6_save_grid.addWidget(self.cB_saveConf, 0, 4)
+        self._tab6_save_grid.addWidget(self.cB_noSave, 0, 5)
+        self._tab6_root_v.addWidget(self._tab6_save_box)
+
+        # Inference flags
+        self._tab6_flag_box = QtWidgets.QGroupBox(self.tab_6)
+        self._tab6_flag_box.setTitle("Inference Options")
+        self._tab6_flag_grid = QtWidgets.QGridLayout(self._tab6_flag_box)
+        self._tab6_flag_grid.addWidget(self.cB_agnoNms, 0, 0)
+        self._tab6_flag_grid.addWidget(self.cB_augment, 0, 1)
+        self._tab6_flag_grid.addWidget(self.cB_visualize, 0, 2)
+        self._tab6_flag_grid.addWidget(self.cB_update, 0, 3)
+        self._tab6_flag_grid.addWidget(self.cB_existOk, 0, 4)
+        self._tab6_flag_grid.addWidget(self.cB_hideLab, 1, 0)
+        self._tab6_flag_grid.addWidget(self.cB_hideConf, 1, 1)
+        self._tab6_flag_grid.addWidget(self.cB_half, 1, 2)
+        self._tab6_flag_grid.addWidget(self.cB_dnn, 1, 3)
+        self._tab6_flag_grid.addWidget(self.cB_retina, 1, 4)
+        self._tab6_root_v.addWidget(self._tab6_flag_box)
+
+        # Thresholds / numeric settings
+        self._tab6_num_box = QtWidgets.QGroupBox(self.tab_6)
+        self._tab6_num_box.setTitle("Thresholds / Limits")
+        self._tab6_num_grid = QtWidgets.QGridLayout(self._tab6_num_box)
+        self._tab6_num_grid.addWidget(self.label_41, 0, 0)
+        self._tab6_num_grid.addWidget(self.dB_confThres, 1, 0)
+        self._tab6_num_grid.addWidget(self.label_42, 0, 1)
+        self._tab6_num_grid.addWidget(self.dB_ioufThres, 1, 1)
+        self._tab6_num_grid.addWidget(self.label_44, 0, 2)
+        self._tab6_num_grid.addWidget(self.sB_maxDet, 1, 2)
+        self._tab6_num_grid.addWidget(self.label_45, 0, 3)
+        self._tab6_num_grid.addWidget(self.sB_lineThick, 1, 3)
+        self._tab6_num_grid.addWidget(self.label_46, 0, 4)
+        self._tab6_num_grid.addWidget(self.sB_vidStride, 1, 4)
+        self._tab6_root_v.addWidget(self._tab6_num_box)
+
+        # Project / class / device
+        self._tab6_misc_box = QtWidgets.QGroupBox(self.tab_6)
+        self._tab6_misc_box.setTitle("Names / Device")
+        self._tab6_misc_grid = QtWidgets.QGridLayout(self._tab6_misc_box)
+        self._tab6_misc_grid.addWidget(self.label_49, 0, 0)
+        self._tab6_misc_grid.addWidget(self.lE_classes, 1, 0, 1, 2)
+        self._tab6_misc_grid.addWidget(self.label_40, 0, 2)
+        self._tab6_misc_grid.addWidget(self.lE_prjname, 1, 2)
+        self._tab6_misc_grid.addWidget(self.label_43, 0, 3)
+        self._tab6_misc_grid.addWidget(self.lE_prjname_2, 1, 3)
+        self._tab6_misc_grid.addWidget(self.label_47, 0, 4)
+        self._tab6_misc_grid.addWidget(self.lE_device, 1, 4)
+        self._tab6_root_v.addWidget(self._tab6_misc_box)
+
+        self._tab6_root_v.addStretch(1)
+        # ---------------------------------------------------------
+
         self.tabWidget.addTab(self.tab_6, "")
         self.tab_h = QtWidgets.QWidget()
         self.tab_h.setObjectName("tab_h")
@@ -573,6 +1210,8 @@ class Ui_MainWindow(object):
         self.pB_SerDiscon.clicked.connect(MainWindow.do_Serdis) # type: ignore
         self.pB_Labelme.clicked.connect(MainWindow.do_labelme) # type: ignore
         self.pB_Labelme2yolo.clicked.connect(MainWindow.do_labelme2yolo) # type: ignore
+        self.pB_VideoToImages.clicked.connect(MainWindow.do_video2img)
+
 
         self.comboBox_3.currentIndexChanged.connect(MainWindow.do_combobox_3)
         self.comboBox_4.currentIndexChanged.connect(MainWindow.do_combobox_4)
@@ -591,8 +1230,8 @@ class Ui_MainWindow(object):
         self.pB_Composedset.setText(_translate("MainWindow", "Compose dataset"))
         self.pB_Opentopo.setText(_translate("MainWindow", "View Image"))
         self.lB_Toponame.setText(_translate("MainWindow", ""))
-        self.label_31.setText(_translate("MainWindow", "SPM IMG: Post processing"))
-        self.label_32.setText(_translate("MainWindow", "AI Pre processing"))
+        self.label_31.setText(_translate("MainWindow", "SPM IMG: Post-processing"))
+        self.label_32.setText(_translate("MainWindow", "AI Pre-processing"))
         self.label_33.setText(_translate("MainWindow", "Train(%)"))
         self.label_34.setText(_translate("MainWindow", "Validation(%)"))
         self.lE_TrainR.setText(_translate("MainWindow", "80"))
@@ -602,18 +1241,18 @@ class Ui_MainWindow(object):
         self.pB_Editclass.setText(_translate("MainWindow", "Edit Classes"))
         self.pB_Labelme.setText(_translate("MainWindow", "Label me"))
         self.pB_Labelme2yolo.setText(_translate("MainWindow", "Convert to yolov5"))
-
+        self.pB_VideoToImages.setText(_translate("MainWindow", "Video to images"))
 
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_3), _translate("MainWindow", "Preparation"))
         self.label_26.setText(_translate("MainWindow", "Weights"))
         self.label_25.setText(_translate("MainWindow", "Data"))
         self.label_22.setText(_translate("MainWindow", "Img Pixels"))
         self.label_24.setText(_translate("MainWindow", "Epochs"))
-        self.lB_Hyper.setText(_translate("MainWindow", "None"))
+        self.lB_Hyper.setText(_translate("MainWindow", "default"))
         self.lB_DYaml.setText(_translate("MainWindow", "None"))
         self.cB_Cache.setText(_translate("MainWindow", "Cache On"))
         self.label_30.setText(_translate("MainWindow", "Model"))
-        self.label_28.setText(_translate("MainWindow", "Hyper"))
+        self.label_28.setText(_translate("MainWindow", "Hyper parameter"))
         self.label_23.setText(_translate("MainWindow", "Batch"))
         self.comboBox.setItemText(0, _translate("MainWindow", "YOLOv5s"))
         self.comboBox.setItemText(1, _translate("MainWindow", "YOLOv5m"))
@@ -711,5 +1350,4 @@ class Ui_MainWindow(object):
         self.tabWidget.setTabText(self.tabWidget.indexOf(self.tab_6), _translate("MainWindow", "Settings"))
 
 import resource_rc
-
 
