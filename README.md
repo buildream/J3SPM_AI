@@ -12,7 +12,8 @@
 ## 🖥️ Installation 
 ### **⚠️ Note:** Please remove any previously installed J3SPM_AI folders and backup your works before reinstalling.
 >
->#### ⚠️ Tip: Easy update → Replace J3SPM_AI.py and J3SPM_AI_GUI.py with the latest versions.
+>#### ⚠️ Tip: Easy update
+>    → Download the latest "J3SPM_AI.py" and "J3SPM_AI_GUI.py", then replace the existing files in your "yolov5_J3SPM" folder.
 ### 1. Install Dependencies  
 - Install [Anaconda](https://www.anaconda.com/download/success) first.
 >⚠️ Please install **Anaconda (not Miniconda)**.
