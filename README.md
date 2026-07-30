@@ -10,6 +10,7 @@
 
 
 ## 🖥️ Installation 
+### If you encounter issues during training or inference, please clone the repository again and reinstall it. This applies to installations performed on or after July 6, 2026.
 ### **⚠️ Note:** Please remove any previously installed J3SPM_AI folders and backup your works before reinstalling.
 >
 >#### ⚠️ Tip: Easy update
